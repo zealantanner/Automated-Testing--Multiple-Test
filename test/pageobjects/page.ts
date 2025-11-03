@@ -1,15 +1,16 @@
-import { browser } from '@wdio/globals'
+import { browser, $ } from "@wdio/globals";
+
+
 
 /**
-* main page object containing all methods, selectors and functionality
-* that is shared across all page objects
+*  default page
 */
 export default class Page {
+    get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
     /**
-    * Opens a sub page of the page
-    * @param path path of the sub page (e.g. /path/to/page.html)
+    /* @param path path of the https://www.saucedemo.com/${path}
     */
-    public open (path: string) {
-        return browser.url(`https://the-internet.herokuapp.com/${path}`)
+    open(path="") {
+        return browser.url(`https://www.saucedemo.com/${path}`)
     }
 }
