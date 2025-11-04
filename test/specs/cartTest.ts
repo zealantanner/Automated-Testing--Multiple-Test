@@ -1,16 +1,16 @@
 // import { expect } from '@wdio/globals'
-import Login, { User } from '../pageobjects/login'
+import Login, { User, USERS } from '../pageobjects/login'
 import Inventory from '../pageobjects/inventory'
 import Cart from '../pageobjects/cart'
 
 
 
-const validUser = new User("standard_user","secret_sauce", true);
+const validUser = USERS[0];
 
 describe('Your Cart', () => {
     before(async () => {
         await Login.open();
-        await Login.login(validUser);
+        await Login.assertLogin(validUser);
     })
     describe("Cart CRUD test", () => {
         
