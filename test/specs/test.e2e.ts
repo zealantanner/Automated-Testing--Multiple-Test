@@ -1,15 +1,20 @@
-import { expect } from '@wdio/globals'
-import LoginPage from '../pageobjects1/login.page.js'
-import SecurePage from '../pageobjects1/secure.page.js'
+// import { expect } from '@wdio/globals'
+import { User } from '../utils/utils';
+import Login from '../pageobjects/login'
+import Inventory from '../pageobjects/inventory'
+import Cart from '../pageobjects/cart'
 
-describe('My Login application', () => {
-    it('should login with valid credentials', async () => {
-        await LoginPage.open()
 
-        await LoginPage.login('tomsmith', 'SuperSecretPassword!')
-        await expect(SecurePage.flashAlert).toBeExisting()
-        await expect(SecurePage.flashAlert).toHaveText(
-            expect.stringContaining('You logged into a secure area!'))
+
+const validUser = new User("standard_user","secret_sauce", true);
+
+describe('Your Cart', () => {
+    before(async () => {
+        await Login.open();
+        await Login.login(validUser);
+    })
+    describe("Cart CRUD test", () => {
+        
     })
 })
 

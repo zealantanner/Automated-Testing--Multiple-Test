@@ -1,17 +1,34 @@
 import { $ } from "@wdio/globals";
 import Page from "./page";
+import { User, str, bool, int } from "../utils/utils"
 
-type str = string;
+
+// export class User {
+//     constructor(
+//         public username:str,
+//         public password:str,
+//         public isValid:bool=false,
+//     ) {}
+//     // public async login() {
+//     //     await new Login().login(this.username, this.password, this.isValid);
+//     // }
+// }
 
 class Login extends Page {
-    get inputUsername(){ return $('#user-name') }
-    get inputPassword(){ return $('#password') }
-    get buttonConfirm(){ return $('#login-button') }
-
-    async login(username:str, password:str) {
-        await this.inputUsername.setValue(username)
-        await this.inputPassword.setValue(password)
-        await this.buttonConfirm.click()
+    private get inputUsername() { return $('#user-name') }
+    private get inputPassword() { return $('#password') }
+    private get buttonConfirm() { return $('#login-button') }
+    
+    
+    public async login(user:User) {
+        await this.inputUsername.setValue(user.username);
+        await this.inputPassword.setValue(user.password);
+        await this.buttonConfirm.click();
+        if(user.isValid) {
+            await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
+        } else {
+            await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
+        }
     }
 }
 
