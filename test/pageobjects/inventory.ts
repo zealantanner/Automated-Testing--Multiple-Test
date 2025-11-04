@@ -1,4 +1,5 @@
-import { $ } from "@wdio/globals";
+import { browser, $ } from "@wdio/globals";
+import { str } from "../utils/utils"
 import Page from "./page";
 
 

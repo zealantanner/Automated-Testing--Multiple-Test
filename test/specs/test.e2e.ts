@@ -1,6 +1,5 @@
 // import { expect } from '@wdio/globals'
-import { User } from '../utils/utils';
-import Login from '../pageobjects/login'
+import Login, { User } from '../pageobjects/login'
 import Inventory from '../pageobjects/inventory'
 import Cart from '../pageobjects/cart'
 
