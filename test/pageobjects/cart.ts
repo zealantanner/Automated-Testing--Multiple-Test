@@ -4,12 +4,9 @@ import Page from "./page";
 
 
 
-class Cart extends Page {
+export default new class Cart extends Page {
     private get cartIcon() { return $('a.shopping_cart_link') }
     open() {
         return super.open(`cart.html`);
     }
 }
-
-
-export default new Cart();

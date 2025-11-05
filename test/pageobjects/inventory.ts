@@ -14,18 +14,14 @@ class Item {
 }
 
 /** items to buy */
-class Inventory extends Page {
-    private get items() {
-        $$('.inventory_list .inventory_item').forEach(async (value, index) => {
-
-        })
-        return 
+export default new class Inventory extends Page {
+    //> add
+    public get items() {
+        const them:Item[] = []
+        return $$('.inventory_list .inventory_item').map((value,i))
     }
     private get addToCartButtonOffItem() { return $('.btn_inventory') }
     open() {
         return super.open(`inventory.html`);
     }
 }
-
-
-export default new Inventory();

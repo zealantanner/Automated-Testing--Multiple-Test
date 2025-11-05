@@ -10,7 +10,7 @@ describe("Login", () => {
         describe(`as ${user.username}`, () => {
             it(`should ${user.isValid ? "allow":"deny"} login`, async () => {
                 await Login.open()
-                await Login.assertLogin(user)
+                await Login.login(user,true)
             })
         })
     });

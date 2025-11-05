@@ -2,6 +2,8 @@ import { $ } from "@wdio/globals";
 import Page from "./page";
 import { str, bool, randstr } from "../utils/utils"
 
+
+
 export class User {
     constructor(
         public username:str,
@@ -24,24 +26,28 @@ export const USERS = [
 ]
 
 
-class Login extends Page {
+export default new class Login extends Page {
     private get inputUsername() { return $('#user-name') }
     private get inputPassword() { return $('#password') }
     private get buttonConfirm() { return $('#login-button') }
     private get errorLoginMessage() { return $('//*[@data-test="error"]') }
+    public isLoggedIn = false;
     
-    public async assertLogin(user:User) {
+    public async login(user:User, doAssert:bool=false) {
         await this.inputUsername.setValue(user.username);
         await this.inputPassword.setValue(user.password);
         await this.buttonConfirm.click();
+        if(doAssert) {
+            if(user.isValid) {
+                await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
+            } else {
+                await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
+                await expect(this.errorLoginMessage).toBeExisting()
+            }
+        }
         if(user.isValid) {
-            await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
-        } else {
-            await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
-            await expect(this.errorLoginMessage).toBeExisting()
+            this.isLoggedIn = true
         }
     }
 }
 
-
-export default new Login();
