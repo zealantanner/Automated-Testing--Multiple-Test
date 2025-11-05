@@ -5,7 +5,7 @@ import Inventory from "./inventory";
 
 class HamburgerMenu {
     private get menu() { return $('.bm-menu-wrap') }
-    private get openButton() { return $('button#react-burger-menu-btn') }
+    private get openButton() { return $('button#react-burger-menu-btn') } //> chane these to btn
     private get closeButton() { return $('button#react-burger-cross-btn') }
     public get isOpen() { return this.menu.isDisplayed() }
     private timeToOpen:int = 500;
@@ -50,7 +50,7 @@ class HamburgerMenu {
         if(!alreadyOpen) { await this.open(doAssert) }
         if(doAssert) { await expect(this.allItemsButton).toBeDisplayed() }
         if(doAssert) {
-            
+
             //> add an item to the cart
         }
         await this.resetAppStateButton.click()
