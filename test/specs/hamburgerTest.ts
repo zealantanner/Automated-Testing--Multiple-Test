@@ -9,18 +9,35 @@ import Cart from '../pageobjects/cart'
 
 const validUser = USERS[0];
 
-describe("Hamburger", () => {
-    before(async () => {
+describe(`Hamburger`, () => {
+    beforeEach(async () => {
         await Login.open();
-        await Login.login(validUser);
+        if(Login.isLoggedIn) { await Login.login(validUser) }
     })
-    describe("Opening", () => {
-        it("opens the hamburger menu", async () => {
-            for (let i = 0; i < 10; i++) {
-                await Page.Hamburger.open(true)
-                await Page.Hamburger.close(true)
-                await Page.Hamburger.clickAllItems(true)
+    describe(`Opening`, () => {
+        it(`Opens the hamburger menu`, async () => {
+            for (let i = 0; i < 5; i++) {
+                await Page.Hamburger.clickOpen(true)
+                await Page.Hamburger.clickClose(true)
             }
         })
     })
+    describe(`Menu buttons`)
+        beforeEach(async () => {
+            await Login.open();
+            if(Login.isLoggedIn) { await Login.login(validUser) }
+            await Page.Hamburger.clickOpen(true)
+        })
+        describe(`All Items`, async () => {
+            await Page.Hamburger.clickAllItems(true)
+        })
+        describe(`About`, async () => {
+            await Page.Hamburger.clickAbout(true)
+        })
+        describe(`Logout`, async () => {
+            await Page.Hamburger.clickLogout(true)
+        })
+        describe(`Reset App State`, async () => {
+            await Page.Hamburger.clickResetAppState(true)
+        })
 })

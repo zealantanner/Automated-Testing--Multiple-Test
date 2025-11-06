@@ -1,6 +1,7 @@
-export type str = string;
+export const _ = undefined;
 export type bool = boolean;
 export type int = number;
+export type str = string;
 
 
 export const randstr = (length = 5):str => Math.random().toString(36).slice(2, 2+length)
@@ -19,4 +20,8 @@ export function shuffle(array:any[]):any[] {
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
 }
+
+// export function randIntFrom(...args) {
+    
+// }
 

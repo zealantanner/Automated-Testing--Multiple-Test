@@ -1,4 +1,3 @@
-// import { expect } from '@wdio/globals'
 import Login, { User, USERS } from '../pageobjects/login'
 import Inventory from '../pageobjects/inventory'
 import Cart from '../pageobjects/cart'

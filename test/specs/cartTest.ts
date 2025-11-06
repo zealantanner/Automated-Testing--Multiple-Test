@@ -13,7 +13,9 @@ describe('Your Cart', () => {
         await Login.login(validUser);
     })
     describe("Cart CRUD test", () => {
-        
+        it(`should add item number 4 to the cart`, async () => {
+            await Inventory.addItemToCart(2)
+        })
     })
 })
 

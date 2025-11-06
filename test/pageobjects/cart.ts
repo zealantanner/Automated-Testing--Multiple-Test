@@ -6,7 +6,7 @@ import Page from "./page";
 
 export default new class Cart extends Page {
     private get cartIcon() { return $('a.shopping_cart_link') }
-    open() {
-        return super.open(`cart.html`);
+    async open(doAssert=false) {
+        await super.open(doAssert,`cart.html`);
     }
 }

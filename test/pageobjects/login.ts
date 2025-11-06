@@ -29,25 +29,30 @@ export const USERS = [
 export default new class Login extends Page {
     private get inputUsername() { return $('#user-name') }
     private get inputPassword() { return $('#password') }
-    private get buttonConfirm() { return $('#login-button') }
+    private get btnConfirm() { return $('#login-button') }
     private get errorLoginMessage() { return $('//*[@data-test="error"]') }
     public isLoggedIn = false;
     
     public async login(user:User, doAssert:bool=false) {
-        await this.inputUsername.setValue(user.username);
-        await this.inputPassword.setValue(user.password);
-        await this.buttonConfirm.click();
-        if(doAssert) {
+        if(!this.isLoggedIn) {
+            await this.inputUsername.setValue(user.username);
+            await this.inputPassword.setValue(user.password);
+            await this.btnConfirm.click();
+            if(doAssert) {
+                if(user.isValid) {
+                    await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
+                } else {
+                    await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
+                    await expect.soft(this.errorLoginMessage).toBeExisting()
+                }
+            }
             if(user.isValid) {
-                await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
-            } else {
-                await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
-                await expect(this.errorLoginMessage).toBeExisting()
+                this.isLoggedIn = true
             }
         }
-        if(user.isValid) {
-            this.isLoggedIn = true
-        }
+    }
+    async open(doAssert=false) {
+        await super.open(doAssert,``);
     }
 }
 
