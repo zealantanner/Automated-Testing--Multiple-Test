@@ -1,9 +1,5 @@
-import { browser } from '@wdio/globals'
-import { range } from '../utils/utils';
 import Page from '../pageobjects/page';
-import Login, { User, USERS } from '../pageobjects/login'
-import Inventory from '../pageobjects/inventory'
-import Cart from '../pageobjects/cart'
+import Login, { USERS } from '../pageobjects/login'
 
 
 

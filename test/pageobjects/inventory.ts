@@ -1,10 +1,12 @@
-import { browser, $, $$ } from "@wdio/globals";
-import { _, bool, int, str, range, shuffle } from "../utils/utils"
+import { $$, expect } from "@wdio/globals";
+import { _, int, range, shuffle } from "../utils/utils"
 import Page from "./page";
 import Item from "./inventory/item";
+import HamburgerMenu from "./page/hamburgerMenu";
 
 
 export default new class Inventory extends Page {
+    static Hamburger = new HamburgerMenu();
     public get items() {
         const elementItems = Array.from($$('.inventory_list .inventory_item'));
         return elementItems.map((value,i) => new Item(value,i))
@@ -62,7 +64,7 @@ export default new class Inventory extends Page {
         }
         return removedItems
     }
-    async open(doAssert=false) {
+    async open(doAssert=false) { //> finish doAssert for open
         await super.open(doAssert,`inventory.html`);
     }
 }

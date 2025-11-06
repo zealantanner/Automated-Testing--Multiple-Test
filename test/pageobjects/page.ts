@@ -8,10 +8,10 @@ import YourCart from "./page/yourCart";
 export default class Page {
     static Hamburger = new HamburgerMenu();
     static Cart = new YourCart();
-    protected get textLogo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
+    protected get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
 
     /** @param path https://www.saucedemo.com/{{path}} */
-    async open(doAssert=false,path="") {
+    async open(doAssert=false,path="") { //> finish doAssert for open
         await browser.url(`https://www.saucedemo.com/${path}`)
     }
 }
