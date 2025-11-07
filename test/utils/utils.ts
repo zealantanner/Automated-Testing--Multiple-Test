@@ -27,7 +27,7 @@ export function shuffle(array:any[]):any[] {
 }
 
 
-export function urlsWithMenus(doAssert=false) {
+export function pagesWithMenus(doAssert=false) {
     return [
         ...Array(3).flatMap(() => [Cart, Inventory, Checkout].map(p => () => p.open(doAssert))),
         ...(range(0,5)).map(i => () => InventoryItem.open(doAssert,i))

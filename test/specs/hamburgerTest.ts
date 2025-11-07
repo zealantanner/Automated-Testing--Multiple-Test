@@ -1,5 +1,6 @@
 import Page from '../pageobjects/page';
 import Login, { USERS } from '../pageobjects/login'
+import { range } from '../utils/utils';
 
 
 
@@ -9,20 +10,24 @@ describe(`Hamburger`, () => {
     describe(`Opening`, () => {
         beforeEach(async () => {
             await Login.open();
-            if(Login.isLoggedIn) { await Login.login(validUser) }
+            if(!Login.isLoggedIn) { await Login.login(validUser) }
         })
-        it(`Opens the hamburger menu`, async () => {
-            for (let i = 0; i < 5; i++) {
+        range(0,5).forEach(i => {
+            it(`Should open the hamburger menu on different page #${i+1}`, async () => {
+                await new Page().openRandomPage(true)
                 await Page.Hamburger.clickOpen(true)
                 await Page.Hamburger.clickClose(true)
-            }
+            })
         })
     })
     describe(`Menu buttons`, () => {
         beforeEach(async () => {
-            await Login.open();
-            if(Login.isLoggedIn) { await Login.login(validUser) }
-            await Page.Hamburger.clickOpen()
+            if(!Login.isLoggedIn) {
+                await Login.open();
+                await Login.login(validUser)
+            }
+            await new Page().openRandomPage(true)
+            await Page.Hamburger.clickOpen(true)
         })
         describe(`All Items`, async () => {
             it(`should click "All Items" and take you to inventory`, async () => {
@@ -32,7 +37,6 @@ describe(`Hamburger`, () => {
         describe(`About`, async () => {
             it(`should open "About"`, async () => {
                 await Page.Hamburger.clickAbout(true)
-                await Page.Hamburger.clickAbout()
             })
         })
         describe(`Logout`, async () => {

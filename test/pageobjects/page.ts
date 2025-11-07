@@ -1,13 +1,13 @@
 import { browser, expect, $ } from "@wdio/globals";
 import HamburgerMenu from "./page/hamburgerMenu";
 import YourCart from "./page/yourCart";
-import { int, shuffle, str, urlsWithMenus } from "../utils/utils";
+import { int, shuffle, str, pagesWithMenus } from "../utils/utils";
 import Inventory from "./inventory";
 import Checkout from "./checkout";
 import Cart from "./cart";
 
 
-
+//> edit the jira tickets to work with this
 /** base page */
 export default class Page {
     static Hamburger = new HamburgerMenu();
@@ -37,8 +37,9 @@ export default class Page {
         }
     }
 
+    
     public async openRandomPage(doAssert=false) {
-        shuffle(urlsWithMenus(doAssert))[0]
+        await shuffle(pagesWithMenus(doAssert))[0]
     }
 }
 

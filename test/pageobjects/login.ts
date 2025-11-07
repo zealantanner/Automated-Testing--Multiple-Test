@@ -41,10 +41,13 @@ export default new class Login extends Page {
             await this.btnConfirm.click();
             if(doAssert) {
                 if(user.isValid) {
-                    await expect(browser).toHaveUrl(Inventory.baseUrl.toString())
+                    await expect(browser)
+                        .toHaveUrl(Inventory.baseUrl.toString())
                 } else {
-                    await expect(browser).not.toHaveUrl(Inventory.baseUrl.toString())
-                    await expect.soft(this.errorLoginMessage).toBeExisting()
+                    await expect(browser)
+                        .not.toHaveUrl(Inventory.baseUrl.toString())
+                    await expect.soft(this.errorLoginMessage)
+                        .toBeExisting()
                 }
             }
             if(user.isValid) {

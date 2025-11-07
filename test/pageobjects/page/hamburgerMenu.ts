@@ -1,5 +1,5 @@
 import { browser, expect, $ } from "@wdio/globals";
-import { int, shuffle } from "../../utils/utils";
+import { int } from "../../utils/utils";
 import Inventory from "../inventory";
 import Page from "../page";
 import Login from "../login";
@@ -13,16 +13,28 @@ export default class HamburgerMenu {
     readonly timeToOpen:int = 500;
 
     public async clickOpen(doAssert=false) {
-        if(doAssert) { await expect.soft(this.isOpen).toBe(false) }
+        if(doAssert) {
+            await expect.soft(this.isOpen)
+                .toBe(false)
+        }
         await this.btnOpen.click()
         await browser.pause(this.timeToOpen)
-        if(doAssert) { await expect.soft(this.isOpen).toBe(true) }
+        if(doAssert) {
+            await expect.soft(this.isOpen)
+                .toBe(true)
+        }
     }
     public async clickClose(doAssert=false) {
-        if(doAssert) { await expect.soft(this.isOpen).toBe(true) }
+        if(doAssert) {
+            await expect.soft(this.isOpen)
+                .toBe(true)
+        }
         await this.btnClose.click()
         await browser.pause(this.timeToOpen)
-        if(doAssert) { await expect.soft(this.isOpen).toBe(false) }
+        if(doAssert) {
+            await expect.soft(this.isOpen)
+                .toBe(false)
+        }
     }
     
 
@@ -32,43 +44,39 @@ export default class HamburgerMenu {
     private get btnResetAppState() { return $('#reset_sidebar_link') }
     
     public async clickAllItems(doAssert=false) {
-        if(doAssert) {
-            Login.open()
-            Inventory.open()
-            // const urls = [
-            //     Page.
-            // ]
-            // Page
-            //> go to random part of website
-                //> inventory, an item, cart, checkout
-        }
         if(!this.isOpen) { await this.clickOpen(doAssert) }
         if(doAssert) {
-            await expect.soft(this.btnAllItems).toBeDisplayed()
+            await expect.soft(this.btnAllItems)
+                .toBeDisplayed()
         }
         await this.btnAllItems.click()
         if(doAssert) {
-            await expect(browser).toHaveUrl(Inventory.baseUrl.toString())
+            await expect(browser)
+                .toHaveUrl(Inventory.baseUrl.toString())
         }
     }
     public async clickAbout(doAssert=false) {
         if(!this.isOpen) { await this.clickOpen(doAssert) }
         if(doAssert) {
-            await expect.soft(this.btnAllItems).toBeDisplayed()
+            await expect.soft(this.btnAllItems)
+                .toBeDisplayed()
         }
         await this.btnAbout.click()
         if(doAssert) {
-            await expect(browser).toHaveUrl("https://saucelabs.com")
+            await expect(browser)
+                .toHaveUrl("https://saucelabs.com")
         }
     }
     public async clickLogout(doAssert=false) {
         if(!this.isOpen) { await this.clickOpen(doAssert) }
         if(doAssert) {
-            await expect.soft(this.btnAllItems).toBeDisplayed()
+            await expect.soft(this.btnAllItems)
+                .toBeDisplayed()
         }
         await this.btnLogout.click()
         if(doAssert) {
-            await expect(browser).toHaveUrl(new Page().baseUrl.toString())
+            await expect(browser)
+                .toHaveUrl(new Page().baseUrl.toString())
         }
     }
     public async clickResetAppState(doAssert=false) {
@@ -76,19 +84,24 @@ export default class HamburgerMenu {
             const itemAmount = 3
             const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
             await Inventory.addRandItemsToCart(itemAmount)
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBe(itemAmount+beforeAmount)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBe(itemAmount+beforeAmount)
         }
         if(!this.isOpen) { await this.clickOpen(doAssert) }
         if(doAssert) {
-            await expect.soft(this.btnAllItems).toBeDisplayed()
+            await expect.soft(this.btnAllItems)
+                .toBeDisplayed()
         }
         await this.btnResetAppState.click()
         if(doAssert) {
             for(let item of Inventory.items) {
-                await expect.soft(item.isInCart).toBe(false)
-                await expect.soft(item.getIsDisplayedInCart(doAssert)).toBe(false)
+                await expect.soft(item.isInCart)
+                    .toBe(false)
+                await expect.soft(item.getIsDisplayedInCart(doAssert))
+                    .toBe(false)
             }
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBe(0)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBe(0)
             Page.Cart.getDisplayedCartAmount(doAssert)
             //> make sure those items get cleared
                 //> the add to cart buttons get reset

@@ -7,6 +7,8 @@ import Item from "../utils/item";
 
 export default new class Cart extends Page {
     private get btnCheckout() { return $('button#checkout') }
+
+    public readonly cartLimit = 6
     
     public async clickCheckout(doAssert=false) { //> finish doAssert
         await this.btnCheckout.click()

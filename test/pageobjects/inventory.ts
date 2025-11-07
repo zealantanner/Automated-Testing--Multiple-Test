@@ -2,6 +2,7 @@ import { $$, expect } from "@wdio/globals";
 import { int, range, shuffle } from "../utils/utils"
 import Page from "./page";
 import Item from "../utils/item";
+import Cart from "./cart";
 
 
 export default new class Inventory extends Page {
@@ -10,57 +11,93 @@ export default new class Inventory extends Page {
         return elementItems.map((value) => new Item(value))
     }
     public async getItem(id:int) {
-        return this.items.find(async (item) => await item.getID() == id)
+        for (const item of this.items) {
+            if(await item.getID() === id) {
+                return item;
+            }
+        }
+        return undefined
     }
 
-    /** @param index default of 0 adds the first */
-    public async addItemToCart(index:int=0,doAssert=false) {
+    public async addItemToCart(index?:int,doAssert=false) {
+        const item = (index) ? await this.getItem(index) : Page.Cart.itemsNotInCart[0]
+
+        if(!item) throw new Error(`Item with ID ${index} not found`);
         if(doAssert) {
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBeLessThan(6)
+            await expect.soft(item.isInCart)
+                .toBe(false)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBeLessThan(Cart.cartLimit)
         }
-        await this.items[index].clickAddToCart(doAssert)
-        return this.items[index];
+        await item.clickAddToCart(doAssert)
+        if(doAssert) {
+            await expect.soft(item.isInCart)
+                .toBe(true)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBeLessThan(Cart.cartLimit)
+        }
+        return item;
     }
-    public async addRandItemsToCart(amount:int=1,doAssert=false) {
-        const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
-        const order = shuffle(range(0, this.items.length))
-        const addedItems = []
-        for (let i = 0; i < amount; i++) {
-            await this.addItemToCart(order[i],doAssert)
-            addedItems.push(this.items[order[i]])
+    public async addRandItemsToCart(amountToAdd:int=1,doAssert=false) {
+        const beforeAmount = Page.Cart.itemsInCart.length
+        const toAdd:int[] = shuffle(range(0, this.items.length)).slice(0,amountToAdd)
+        if(doAssert) {
+            await expect.soft(beforeAmount+amountToAdd)
+                .toBeLessThanOrEqual(Cart.cartLimit);
+        }
+        const addedItems = Array(amountToAdd)
+        for(const i of toAdd) {
+            addedItems[i] = (await this.addItemToCart(i,doAssert))
         }
         if(doAssert) {
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBe(beforeAmount + amount)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBe(beforeAmount + amountToAdd)
+            await expect.soft(Page.Cart.itemsInCart.length)
+                .toBe(beforeAmount + amountToAdd)
         }
         return addedItems
     }
-    /** @param index default of 0 removes the first */
-    public async removeItemFromCart(index:int=0,doAssert=false) {
+    public async removeItemFromCart(index?:int,doAssert=false) {
         if(doAssert) {
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBeGreaterThan(0)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBeGreaterThan(0)
+            await expect.soft(Page.Cart.itemsInCart.length)
+                .toBeGreaterThan(0)
         }
-        if(index===0) {
-            this.items.find((item,i) => {
-                index = i;
-                return item.isInCart;
-            })
-        } else {
-            await this.items[index].clickRemove(doAssert)
-        }
-        return this.items[index];
+        const item = (index) ? await this.getItem(index) : Page.Cart.itemsInCart[0]
+        if(!item) throw new Error(`Item with ID ${index} not found`);
+        item.clickRemove(doAssert)
+        return item;
     }
-    public async removeAllItemsFromCart(doAssert=false) {
-        const removedItems = []
-        for(const item of this.items) {
-            if(item.isInCart) {
-                await item.clickRemove(doAssert)
-                removedItems.push(item)
+    public async addAllItemsToCart(doAssert=false) {
+        const itemsToBeAdded = Page.Cart.itemsNotInCart
+        for(const item of itemsToBeAdded) {
+            await item.clickAddToCart(doAssert)
+        }
+        if(doAssert) {
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBe(0)
+            for(const item of itemsToBeAdded) {
+                await expect.soft(item.isInCart)
+                    .toBe(true)
             }
         }
-        if(doAssert) {
-            await expect.soft(Page.Cart.getDisplayedCartAmount()).toBe(0)
+        return itemsToBeAdded
+    }
+    public async removeAllItemsFromCart(doAssert=false) {
+        const itemsToBeRemoved = Page.Cart.itemsInCart
+        for(const item of itemsToBeRemoved) {
+            await item.clickRemove(doAssert)
         }
-        return removedItems
+        if(doAssert) {
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert))
+                .toBe(0)
+            for(const item of itemsToBeRemoved) {
+                await expect.soft(item.isInCart)
+                    .toBe(false)
+            }
+        }
+        return itemsToBeRemoved
     }
     /** @param subUrl inventory.html */
     public get subUrl() { return new URL("inventory.html").toString() }
