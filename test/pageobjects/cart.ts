@@ -1,4 +1,4 @@
-import { $ } from "@wdio/globals";
+import { browser, expect, $ } from "@wdio/globals";
 import Page from "./page";
 import Checkout from "./checkout";
 import Item from "../utils/item";

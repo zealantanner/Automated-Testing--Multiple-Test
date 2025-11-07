@@ -1,4 +1,4 @@
-import { $$, expect } from "@wdio/globals";
+import { browser, expect, $, $$ } from "@wdio/globals";
 import { int, range, shuffle } from "../utils/utils"
 import Page from "./page";
 import Item from "../utils/item";
