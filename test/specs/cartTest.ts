@@ -9,7 +9,7 @@ const validUser = USERS[0];
 
 describe('Your Cart', () => {
     before(async () => {
-        await new Login.open();
+        await Login.open();
         await Login.login(validUser);
     })
     describe("Cart CRUD test", () => {

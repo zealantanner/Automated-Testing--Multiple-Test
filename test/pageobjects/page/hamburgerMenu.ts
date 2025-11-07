@@ -5,7 +5,7 @@ import Page from "../page";
 import Login from "../login";
 
 
-export default class HamburgerMenu {
+export default new class HamburgerMenu {
     private get menu() { return $('.bm-menu-wrap') }
     private get btnOpen() { return $('button#react-burger-menu-btn') }
     private get btnClose() { return $('button#react-burger-cross-btn') }
