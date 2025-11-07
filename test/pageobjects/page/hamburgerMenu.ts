@@ -1,14 +1,16 @@
-import { browser, $ } from "@wdio/globals";
-import { _, int } from "../../utils/utils";
+import { browser, expect, $ } from "@wdio/globals";
+import { _, int, shuffle } from "../../utils/utils";
 import Inventory from "../inventory";
 import Page from "../page";
+import Login from "../login";
+
 
 export default class HamburgerMenu {
     private get menu() { return $('.bm-menu-wrap') }
     private get btnOpen() { return $('button#react-burger-menu-btn') }
     private get btnClose() { return $('button#react-burger-cross-btn') }
     public get isOpen() { return this.menu.isDisplayed() }
-    private timeToOpen:int = 500;
+    readonly timeToOpen:int = 500;
 
     public async clickOpen(doAssert=false) {
         if(doAssert) { await expect.soft(this.isOpen).toBe(false) }
@@ -22,6 +24,7 @@ export default class HamburgerMenu {
         await browser.pause(this.timeToOpen)
         if(doAssert) { await expect.soft(this.isOpen).toBe(false) }
     }
+    
 
     private get btnAllItems() { return $('#inventory_sidebar_link') }
     private get btnAbout() { return $('#about_sidebar_link') }
@@ -29,13 +32,23 @@ export default class HamburgerMenu {
     private get btnResetAppState() { return $('#reset_sidebar_link') }
     
     public async clickAllItems(doAssert=false) {
+        if(doAssert) {
+            Login.open()
+            Inventory.open()
+            // const urls = [
+            //     Page.
+            // ]
+            // Page
+            //> go to random part of website
+                //> inventory, an item, cart, checkout
+        }
         if(!this.isOpen) { await this.clickOpen(doAssert) }
         if(doAssert) {
             await expect.soft(this.btnAllItems).toBeDisplayed()
         }
         await this.btnAllItems.click()
         if(doAssert) {
-            await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
+            await expect(browser).toHaveUrl(Inventory.baseUrl.toString())
         }
     }
     public async clickAbout(doAssert=false) {
@@ -55,7 +68,7 @@ export default class HamburgerMenu {
         }
         await this.btnLogout.click()
         if(doAssert) {
-            await expect(browser).toHaveUrl("https://www.saucedemo.com")
+            await expect(browser).toHaveUrl(new Page().baseUrl.toString())
         }
     }
     public async clickResetAppState(doAssert=false) {

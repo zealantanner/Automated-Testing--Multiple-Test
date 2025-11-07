@@ -1,6 +1,7 @@
-import { $ } from "@wdio/globals";
+import { expect, $ } from "@wdio/globals";
 import Page from "./page";
 import { str, bool, randstr } from "../utils/utils"
+import Inventory from "./inventory";
 
 
 
@@ -40,9 +41,9 @@ export default new class Login extends Page {
             await this.btnConfirm.click();
             if(doAssert) {
                 if(user.isValid) {
-                    await expect(browser).toHaveUrl(expect.stringContaining("inventory.html"))
+                    await expect(browser).toHaveUrl(Inventory.baseUrl.toString())
                 } else {
-                    await expect(browser).toHaveUrl(expect.not.stringContaining("inventory.html"))
+                    await expect(browser).not.toHaveUrl(Inventory.baseUrl.toString())
                     await expect.soft(this.errorLoginMessage).toBeExisting()
                 }
             }
@@ -50,9 +51,6 @@ export default new class Login extends Page {
                 this.isLoggedIn = true
             }
         }
-    }
-    async open(doAssert=false) {
-        await super.open(doAssert,``);
     }
 }
 

@@ -6,11 +6,11 @@ import Login, { USERS } from '../pageobjects/login'
 const validUser = USERS[0];
 
 describe(`Hamburger`, () => {
-    beforeEach(async () => {
-        await Login.open();
-        if(Login.isLoggedIn) { await Login.login(validUser) }
-    })
     describe(`Opening`, () => {
+        beforeEach(async () => {
+            await Login.open();
+            if(Login.isLoggedIn) { await Login.login(validUser) }
+        })
         it(`Opens the hamburger menu`, async () => {
             for (let i = 0; i < 5; i++) {
                 await Page.Hamburger.clickOpen(true)
@@ -18,22 +18,32 @@ describe(`Hamburger`, () => {
             }
         })
     })
-    describe(`Menu buttons`)
+    describe(`Menu buttons`, () => {
         beforeEach(async () => {
             await Login.open();
             if(Login.isLoggedIn) { await Login.login(validUser) }
-            await Page.Hamburger.clickOpen(true)
+            await Page.Hamburger.clickOpen()
         })
         describe(`All Items`, async () => {
-            await Page.Hamburger.clickAllItems(true)
+            it(`should click "All Items" and take you to inventory`, async () => {
+                await Page.Hamburger.clickAllItems(true)
+            })
         })
         describe(`About`, async () => {
-            await Page.Hamburger.clickAbout(true)
+            it(`should open "About"`, async () => {
+                await Page.Hamburger.clickAbout(true)
+                await Page.Hamburger.clickAbout()
+            })
         })
         describe(`Logout`, async () => {
-            await Page.Hamburger.clickLogout(true)
+            it(`should open "Logout"`, async () => {
+                await Page.Hamburger.clickLogout(true)
+            })
         })
         describe(`Reset App State`, async () => {
-            await Page.Hamburger.clickResetAppState(true)
+            it(`should open "Reset App State"`, async () => {
+                await Page.Hamburger.clickResetAppState(true)
+            })
         })
+    })
 })

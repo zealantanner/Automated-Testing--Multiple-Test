@@ -1,14 +1,26 @@
 import { $ } from "@wdio/globals";
 import Page from "./page";
+import Checkout from "./checkout";
+
 
 
 
 export default new class Cart extends Page {
     private get btnCheckout() { return $('button#checkout') }
-    public async click(doAssert=false) { //> finish doAssert
-        await this.btnCheckout
+    
+    public async clickCheckout(doAssert=false) { //> finish doAssert
+        await this.btnCheckout.click()
+        if(doAssert) {
+            await expect(browser.getUrl()).toBe(Checkout.baseUrl)
+        }
     }
-    async open(doAssert=false) { //> finish doAssert for open
-        await super.open(doAssert,`cart.html`);
+
+    /** @param subUrl cart.html */
+    public get subUrl() { return new URL("cart.html").toString() }
+    /** @param baseUrl https://www.saucedemo.com/cart.html */
+    public get baseUrl() { return new URL(this.subUrl,super.baseUrl).toString() }
+
+    public async open(doAssert=false) { //> finish doAssert for open
+        await super.open(doAssert,this.baseUrl);
     }
 }

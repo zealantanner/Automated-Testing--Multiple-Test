@@ -1,6 +1,7 @@
-import { $ } from "@wdio/globals"
+import { $, expect } from "@wdio/globals"
 import { int } from "../../utils/utils";
 import Inventory from "../inventory";
+import Page from "../page";
 
 
 export default class YourCart {
@@ -23,7 +24,7 @@ export default class YourCart {
     }
     public async click(doAssert=false) {
         await this.link.click()
-        if(doAssert) { await expect(browser).toHaveUrl("https://www.saucedemo.com") }
+        if(doAssert) { await expect(browser).toHaveUrl(new Page().baseUrl) }
     }
 
 }

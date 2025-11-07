@@ -6,10 +6,9 @@ import HamburgerMenu from "./page/hamburgerMenu";
 
 
 export default new class Inventory extends Page {
-    static Hamburger = new HamburgerMenu();
     public get items() {
         const elementItems = Array.from($$('.inventory_list .inventory_item'));
-        return elementItems.map((value,i) => new Item(value,i))
+        return elementItems.map((value) => new Item(value))
     }
     public getItem(index:int) {
         return this.items[index];
@@ -64,7 +63,11 @@ export default new class Inventory extends Page {
         }
         return removedItems
     }
-    async open(doAssert=false) { //> finish doAssert for open
-        await super.open(doAssert,`inventory.html`);
+    /** @param subUrl inventory.html */
+    public get subUrl() { return new URL("inventory.html").toString() }
+    /** @param baseUrl https://www.saucedemo.com/inventory.html */
+    public get baseUrl() { return new URL(this.subUrl,super.baseUrl).toString() }
+    public async open(doAssert=false) { //> finish doAssert for open
+        await super.open(doAssert,this.baseUrl);
     }
 }
