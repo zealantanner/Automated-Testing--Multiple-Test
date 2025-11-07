@@ -24,7 +24,7 @@ export default new class InventoryItem extends Page {
         return url.toString()
     }
 
-    public async open(doAssert=false,itemID:any) { //> finish doAssert for open
+    public async open(doAssert=false,itemID:any) {
         this._itemID = itemID
         await super.open(doAssert,this.baseUrl);
     }

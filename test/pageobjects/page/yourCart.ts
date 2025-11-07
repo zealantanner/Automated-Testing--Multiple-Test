@@ -4,7 +4,7 @@ import Inventory from "../inventory";
 import Page from "../page";
 
 
-export default new class YourCart {
+export default class YourCart {
     private get link() { return $('a.shopping_cart_link') }
     private get cartAmountIcon() { return this.link.$('span.shopping_cart_badge') }
     public async getDisplayedCartAmount(doAssert=false) {

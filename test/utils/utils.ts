@@ -1,3 +1,8 @@
+import Cart from "../pageobjects/cart";
+import Checkout from "../pageobjects/checkout";
+import Inventory from "../pageobjects/inventory";
+import InventoryItem from "../pageobjects/inventory-item";
+
 export const _ = undefined;
 export type bool = boolean;
 export type int = number;
@@ -20,6 +25,17 @@ export function shuffle(array:any[]):any[] {
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
 }
+
+
+export function urlsWithMenus(doAssert=false) {
+    return [
+        ...Array(3).flatMap(() => [Cart, Inventory, Checkout].map(p => () => p.open(doAssert))),
+        ...(range(0,5)).map(i => () => InventoryItem.open(doAssert,i))
+    ]
+}
+
+
+
 
 // export function randIntFrom(...args) {
     

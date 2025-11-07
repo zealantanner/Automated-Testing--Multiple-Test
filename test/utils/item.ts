@@ -1,5 +1,5 @@
-import { bool, int } from "../../utils/utils";
-import Page from "../page";
+import { bool, int } from "./utils";
+import Page from "../pageobjects/page";
 import { expect, $ } from "@wdio/globals";
 
 
@@ -29,14 +29,14 @@ export default class Item {
             await expect.soft(text).toMatch("Add to cart")
             await expect.soft(this.isInCart).toBe(false)
         }
-        const beforeAmount = await Page.Cart.getDisplayedCartAmount()
+        const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
         await this.btnAddToCart.click()
         this._isInCart = true;
         if(doAssert) {
             const text = await this.btnAddToCart.getText()
             await expect.soft(text).toMatch("Remove")
             await expect.soft(this.isInCart).toBe(true)
-            await expect.soft(await Page.Cart.getDisplayedCartAmount()).toBe(beforeAmount+1)
+            await expect.soft(await Page.Cart.getDisplayedCartAmount(doAssert)).toBe(beforeAmount+1)
         }
     }
     public async clickRemove(doAssert=false) {
@@ -45,14 +45,14 @@ export default class Item {
             await expect.soft(text).toMatch("Remove")
             await expect.soft(this.isInCart).toBe(true)
         }
-        const beforeAmount = await Page.Cart.getDisplayedCartAmount()
+        const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
         await this.btnAddToCart.click()
         this._isInCart = false;
         if(doAssert) {
             const text = await this.btnAddToCart.getText()
             await expect.soft(text).toMatch("Add to cart")
             await expect.soft(this.isInCart).toBe(false)
-            await expect.soft(Page.Cart.getDisplayedCartAmount()).toBe(beforeAmount-1)
+            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBe(beforeAmount-1)
         }
     }
     public async toggleInCart(doAssert=false) {

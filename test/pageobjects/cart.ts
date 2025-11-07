@@ -1,7 +1,7 @@
 import { $ } from "@wdio/globals";
 import Page from "./page";
 import Checkout from "./checkout";
-
+import Item from "../utils/item";
 
 
 
@@ -20,7 +20,7 @@ export default new class Cart extends Page {
     /** @param baseUrl https://www.saucedemo.com/cart.html */
     public get baseUrl() { return new URL(this.subUrl,super.baseUrl).toString() }
 
-    public async open(doAssert=false) { //> finish doAssert for open
+    public async open(doAssert=false) {
         await super.open(doAssert,this.baseUrl);
     }
 }

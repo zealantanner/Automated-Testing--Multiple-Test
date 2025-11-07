@@ -1,11 +1,11 @@
 import { browser, expect, $ } from "@wdio/globals";
-import { _, int, shuffle } from "../../utils/utils";
+import { int, shuffle } from "../../utils/utils";
 import Inventory from "../inventory";
 import Page from "../page";
 import Login from "../login";
 
 
-export default new class HamburgerMenu {
+export default class HamburgerMenu {
     private get menu() { return $('.bm-menu-wrap') }
     private get btnOpen() { return $('button#react-burger-menu-btn') }
     private get btnClose() { return $('button#react-burger-cross-btn') }

@@ -1,8 +1,7 @@
 import { $$, expect } from "@wdio/globals";
-import { _, int, range, shuffle } from "../utils/utils"
+import { int, range, shuffle } from "../utils/utils"
 import Page from "./page";
-import Item from "./inventory/item";
-import HamburgerMenu from "./page/hamburgerMenu";
+import Item from "../utils/item";
 
 
 export default new class Inventory extends Page {
@@ -10,8 +9,8 @@ export default new class Inventory extends Page {
         const elementItems = Array.from($$('.inventory_list .inventory_item'));
         return elementItems.map((value) => new Item(value))
     }
-    public getItem(index:int) {
-        return this.items[index];
+    public async getItem(id:int) {
+        return this.items.find(async (item) => await item.getID() == id)
     }
 
     /** @param index default of 0 adds the first */

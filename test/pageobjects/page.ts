@@ -1,7 +1,10 @@
 import { browser, expect, $ } from "@wdio/globals";
 import HamburgerMenu from "./page/hamburgerMenu";
 import YourCart from "./page/yourCart";
-import { int, str } from "../utils/utils";
+import { int, shuffle, str, urlsWithMenus } from "../utils/utils";
+import Inventory from "./inventory";
+import Checkout from "./checkout";
+import Cart from "./cart";
 
 
 
@@ -10,13 +13,13 @@ export default class Page {
     static Hamburger = new HamburgerMenu();
     static Cart = new YourCart();
     protected get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
+
     /** @param baseUrl https://www.saucedemo.com */
     public get baseUrl() { return new URL("https://www.saucedemo.com").toString() }
 
     /** @param path the url to open */
     public async open(doAssert=false,path?:str) { //> finish doAssert for open
         path = path ?? this.baseUrl
-
         await browser.url(path)
         if(doAssert) {
             let currentUrl;
@@ -32,6 +35,10 @@ export default class Page {
             )
             await expect(browser).toHaveUrl(path);
         }
+    }
+
+    public async openRandomPage(doAssert=false) {
+        shuffle(urlsWithMenus(doAssert))[0]
     }
 }
 
