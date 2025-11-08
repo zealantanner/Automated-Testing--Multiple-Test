@@ -6,7 +6,7 @@ import { base } from '../pageobjects/base.ts'
 
 
 
-describe('Your Cart', () => {
+describe('Your Cart', () => { //> just write all the function I need first
     beforeEach("Login", async () => {
         await Login.open();
         await Login.login(validUser)
