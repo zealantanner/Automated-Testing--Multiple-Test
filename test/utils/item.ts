@@ -1,20 +1,26 @@
-import { bool, int } from "./utils";
-import Page from "../pageobjects/page";
 import { expect, $ } from "@wdio/globals";
-
+import { bool, int } from "./utils.ts";
+import { base } from "../pageobjects/base.ts";
 
 export default class Item {
     constructor(
         private element:WebdriverIO.Element,
         private _isInCart:bool=false,
     ) {}
-    public async getName() { return await this.element.$('.inventory_item_name').getText() }
-    public async getID() {
-        const idAttr = await this.element.$('[id^="item_"][id$="_title_link"]').getAttribute('id')
-        const match = idAttr.match(/item_(\d+)_title_link/)
-        return match ? parseInt(match[1]) : null
+    public get name() {
+        return this.element.$('.inventory_item_name').getText()
     }
-    private get btnAddToCart() { return this.element.$('.btn_inventory') }
+    public get id() {
+        return (async () => {
+            const idAttr = await this.element.$('[id^="item_"][id$="_title_link"]').getAttribute('id')
+            const match = idAttr.match(/item_(\d+)_title_link/)
+            return match ? parseInt(match[1]) : null
+        })()
+    }
+    
+    private get btnAddToCart() { return this.element.$('.btn_inventory[id^="add-to-cart"]') }
+    private get btnRemove() { return this.element.$('.btn_inventory[id^="remove"]') }
+    private get btnToggle() { return this.element.$('.btn_inventory') }
 
     public get isInCart() {
         return this._isInCart;
@@ -23,53 +29,33 @@ export default class Item {
         this._isInCart = val;
     }
 
-    public async clickAddToCart(doAssert=false) {
-        if(doAssert) {
-            const text = await this.btnAddToCart.getText()
-            await expect.soft(text).toMatch("Add to cart")
-            await expect.soft(this.isInCart).toBe(false)
-        }
-        const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
+    public async clickAddToCart() {
+        await this.btnAddToCart.waitForDisplayed({ timeout: base.delay })
         await this.btnAddToCart.click()
         this._isInCart = true;
-        if(doAssert) {
-            const text = await this.btnAddToCart.getText()
-            await expect.soft(text).toMatch("Remove")
-            await expect.soft(this.isInCart).toBe(true)
-            await expect.soft(await Page.Cart.getDisplayedCartAmount(doAssert)).toBe(beforeAmount+1)
-        }
     }
-    public async clickRemove(doAssert=false) {
-        if(doAssert) {
-            const text = await this.btnAddToCart.getText()
-            await expect.soft(text).toMatch("Remove")
-            await expect.soft(this.isInCart).toBe(true)
-        }
-        const beforeAmount = await Page.Cart.getDisplayedCartAmount(doAssert)
-        await this.btnAddToCart.click()
+    public async clickRemove() {
+        await this.btnRemove.waitForDisplayed({ timeout: base.delay })
+        await this.btnRemove.click()
         this._isInCart = false;
-        if(doAssert) {
-            const text = await this.btnAddToCart.getText()
-            await expect.soft(text).toMatch("Add to cart")
-            await expect.soft(this.isInCart).toBe(false)
-            await expect.soft(Page.Cart.getDisplayedCartAmount(doAssert)).toBe(beforeAmount-1)
-        }
     }
-    public async toggleInCart(doAssert=false) {
-        const text = await this.btnAddToCart.getText()
+    public async toggleInCart() {
+        const text = await this.btnToggle.getText()
         if(text === "Add to cart") {
-            await this.clickAddToCart(doAssert)
+            await this.clickAddToCart()
         } else if(text === "Remove") {
-            await this.clickRemove(doAssert)
+            await this.clickRemove()
         }
         return text === "Add to cart"
     }
 
-    public async getIsDisplayedInCart(doAssert=false) {
-        if(doAssert) {
-            await expect.soft(this.btnAddToCart.getText())
+    public get isDisplayedInCart() {
+        return (async () => {
+            return await this.btnAddToCart.getText() === "Remove"
+        })()
+    }
+    public async assertIsDisplayedInCart() {
+        await expect(await this.isDisplayedInCart)
             .toMatch((this.isInCart) ? "Remove" : "Add to cart")
-        }
-        return await this.btnAddToCart.getText() === "Remove"
     }
 }

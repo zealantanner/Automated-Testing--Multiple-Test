@@ -1,28 +1,41 @@
 import { browser, expect, $ } from "@wdio/globals";
-import Page from "./page";
-import Checkout from "./checkout";
-import Item from "../utils/item";
+import Base from "./base.ts";
+import Checkout from "./checkout.ts";
+import Inventory from "../pageobjects/inventory.ts";
 
 
 
-export default new class Cart extends Page {
-    private get btnCheckout() { return $('button#checkout') }
-
+class Cart extends Base {
     public readonly cartLimit = 6
     
-    public async clickCheckout(doAssert=false) { //> finish doAssert
+    private get btnCheckout() { return $('button#checkout') }
+    
+    public get itemsInCart() {
+        return Inventory.items.filter(i => i.isInCart)
+    }
+    public get itemsNotInCart() {
+        return Inventory.items.filter(i => !i.isInCart)
+    }
+    
+
+    public async clickCheckout() {
         await this.btnCheckout.click()
-        if(doAssert) {
-            await expect(browser.getUrl()).toBe(Checkout.baseUrl)
-        }
+    }
+    public async assertCheckout() {
+        await this.clickCheckout()
+        await expect(browser.getUrl()).toBe(Checkout.baseUrl)
     }
 
+
     /** @param subUrl cart.html */
-    public get subUrl() { return new URL("cart.html").toString() }
+    public get subUrl() { return "cart.html" }
     /** @param baseUrl https://www.saucedemo.com/cart.html */
     public get baseUrl() { return new URL(this.subUrl,super.baseUrl).toString() }
 
-    public async open(doAssert=false) {
-        await super.open(doAssert,this.baseUrl);
+    public async open() {
+        await super.open(this.baseUrl);
     }
 }
+
+
+export default new Cart();

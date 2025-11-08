@@ -1,8 +1,8 @@
-import { $, expect } from "@wdio/globals"
-import { int } from "../../utils/utils";
-import Inventory from "../inventory";
-import Page from "../page";
-import Cart from "../cart";
+import { browser, expect, $ } from "@wdio/globals"
+import { int } from "../../utils/utils.ts";
+import Inventory from "../inventory.ts";
+import Cart from "../cart.ts";
+import { base } from "../base.ts";
 
 
 export default class YourCart {
@@ -15,30 +15,33 @@ export default class YourCart {
         return Inventory.items.filter(i => !i.isInCart)
     }
 
-    public async getDisplayedCartAmount(doAssert=false) {
-        let amount:int;
-        if(await this.cartAmountIcon.isExisting()) {
-            amount = parseInt(await this.cartAmountIcon.getText())
-        } else {
-            amount = 0
-        }
-        if(doAssert) {
-            const amountToAssert = this.itemsInCart.length
-            await expect.soft(amount)
-                .toBe(amountToAssert)
-            await expect.soft(amount)
-                .toBeLessThanOrEqual(Cart.cartLimit)
-            await expect.soft(amount)
-                .toBeGreaterThanOrEqual(0)
-        }
-        return amount
+    public get displayedCartAmount() {
+        return (async () => {
+            const exists = await this.cartAmountIcon.isExisting()
+            let amount = exists ? parseInt(await this.cartAmountIcon.getText()) : 0
+            return amount
+        })()
     }
-    public async click(doAssert=false) {
+    public async assertDisplayedCartAmount() {
+        const amountToAssert = this.itemsInCart.length
+        const displayedAmount = (await this.displayedCartAmount)
+        await expect(displayedAmount)
+            .toBe(amountToAssert)
+        await expect(displayedAmount)
+            .toBeLessThanOrEqual(Cart.cartLimit)
+        await expect(displayedAmount)
+            .toBeGreaterThanOrEqual(0)
+    }
+    
+    public async click() {
         await this.link.click()
-        if(doAssert) {
-            await expect(browser)
-                .toHaveUrl(new Page().baseUrl)
-        }
+    }
+    public async assertClick() {
+        await this.click()
+        await expect(browser)
+            .toHaveUrl(base.baseUrl)
     }
 
 }
+
+

@@ -1,11 +1,10 @@
 // import { expect } from '@wdio/globals'
-import Login, { User, USERS } from '../pageobjects/login'
-import Inventory from '../pageobjects/inventory'
-import Cart from '../pageobjects/cart'
+import Login, { validUser } from '../pageobjects/login.ts'
+import Inventory from '../pageobjects/inventory.ts'
+import Cart from '../pageobjects/cart.ts'
 
 
 
-const validUser = USERS[0];
 
 describe('Your Cart', () => {
     before(async () => {
