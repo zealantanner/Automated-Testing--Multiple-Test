@@ -5,10 +5,12 @@ import { base } from '../pageobjects/base.ts';
 
 
 describe(`Opening`, () => {
-    it(`Should open hamburger menu from random page`, async () => {
-        await Login.open()
+    beforeEach("Login", async () => {
+        await Login.open();
         await Login.login(validUser)
         await base.openRandomPage()
+    })
+    it(`Should open hamburger menu from random page`, async () => {
         await base.Hamburger.assertOpen()
         await base.Hamburger.assertClose()
     })
