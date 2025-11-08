@@ -1,7 +1,7 @@
 import { browser, expect, $ } from "@wdio/globals";
 import Inventory from "./inventory.ts";
 import Base from "./base.ts";
-import { str, bool, randstr } from "../utils/utils.ts"
+import { str, bool } from "../utils/utils.ts"
 
 
 

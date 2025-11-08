@@ -1,6 +1,4 @@
-import { browser, expect } from "@wdio/globals";
-import { int, str } from '../utils/utils.ts';
-import Inventory from './inventory.ts'
+import { int } from '../utils/utils.ts';
 import Base from './base.ts'
 
 

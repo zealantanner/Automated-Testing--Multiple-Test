@@ -1,5 +1,5 @@
-import { expect, $ } from "@wdio/globals";
-import { bool, int } from "./utils.ts";
+import { expect } from "@wdio/globals";
+import { bool } from "./utils.ts";
 import { base } from "../pageobjects/base.ts";
 
 export default class Item {

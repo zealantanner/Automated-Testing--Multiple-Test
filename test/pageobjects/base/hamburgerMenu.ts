@@ -1,8 +1,7 @@
 import { browser, expect, $ } from "@wdio/globals";
-import { int, range, shuffle } from "../../utils/utils.ts";
+import { range, shuffle } from "../../utils/utils.ts";
 import Inventory from "../inventory.ts";
-import Base, { base } from "../base.ts";
-import Login from "../login.ts";
+import { base } from "../base.ts";
 
 
 export default class HamburgerMenu {
