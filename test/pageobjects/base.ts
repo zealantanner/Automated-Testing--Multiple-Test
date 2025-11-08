@@ -1,6 +1,6 @@
 import { browser, expect, $ } from "@wdio/globals";
-import HamburgerMenu from "./page/hamburgerMenu.ts";
-import YourCart from "./page/yourCart.ts";
+import HamburgerMenu from "./base/hamburgerMenu.ts";
+import YourCart from "./base/yourCart.ts";
 import { int, pagesWithMenus, shuffle, str } from "../utils/utils.ts";
 
 
