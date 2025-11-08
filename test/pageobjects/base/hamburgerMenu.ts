@@ -1,5 +1,5 @@
 import { browser, expect, $ } from "@wdio/globals";
-import { int } from "../../utils/utils.ts";
+import { int, range, shuffle } from "../../utils/utils.ts";
 import Inventory from "../inventory.ts";
 import Base, { base } from "../base.ts";
 import Login from "../login.ts";
@@ -15,23 +15,30 @@ export default class HamburgerMenu {
     public async clickOpen() {
         await this.btnOpen.waitForDisplayed({ timeout: base.delay })
         await this.btnOpen.click()
+        await this.menu.waitForDisplayed({ timeout: base.delay })
     }
     public async assertOpen() {
+        await this.menu.waitForDisplayed({ reverse:true, timeout: base.delay })
         await expect(await this.isOpen)
             .toBe(false)
-        await this.btnClose.waitForDisplayed({ reverse:true, timeout: base.delay })
         await this.clickOpen()
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await expect(await this.isOpen)
             .toBe(true)
     }
     public async clickClose() {
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnClose.waitForDisplayed({ timeout: base.delay })
         await this.btnClose.click()
+        await this.menu.waitForDisplayed({ reverse:true, timeout: base.delay })
     }
     public async assertClose() {
+        await this.menu.waitForDisplayed({ timeout: base.delay })
+        await this.btnClose.waitForDisplayed({ timeout: base.delay })
         await expect(await this.isOpen)
             .toBe(true)
         await this.clickClose()
+        await this.menu.waitForDisplayed({ reverse:true, timeout: base.delay })
         await this.btnClose.waitForDisplayed({ reverse:true, timeout: base.delay })
         await expect(await this.isOpen)
             .toBe(false)
@@ -44,6 +51,7 @@ export default class HamburgerMenu {
     
     public async clickAllItems() {
         if(!this.isOpen) { await this.clickOpen() }
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnAllItems.waitForDisplayed({ timeout: base.delay })
         await this.btnAllItems.click()
     }
@@ -54,6 +62,7 @@ export default class HamburgerMenu {
     }
     public async clickAbout() {
         if(!this.isOpen) { await this.clickOpen() }
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnAbout.waitForDisplayed({ timeout: base.delay })
         await this.btnAbout.click()
     }
@@ -66,6 +75,7 @@ export default class HamburgerMenu {
     }
     public async clickLogout() {
         if(!this.isOpen) { await this.clickOpen() }
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnLogout.waitForDisplayed({ timeout: base.delay })
         await this.btnLogout.click()
     }
@@ -78,22 +88,21 @@ export default class HamburgerMenu {
     }
     public async clickResetAppState() {
         if(!this.isOpen) { await this.clickOpen() }
+        await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnResetAppState.waitForDisplayed({ timeout: base.delay })
         await this.btnResetAppState.click()
     }
     public async assertResetAppState() {
         const itemAmount = 3
         const beforeAmount = await base.Cart.displayedCartAmount
-
-        await Inventory.addRandItemsToCart(itemAmount)
-
+        for(const one of shuffle(range(1,itemAmount))) {
+            await Inventory.assertWhateverAddAnItem(one)
+        }
         await expect(await base.Cart.displayedCartAmount)
             .toBe(itemAmount+beforeAmount)
 
         await this.clickResetAppState()
 
-        await expect(base.Cart.itemsInCart.length)
-            .toBe(0)
         await expect(await base.Cart.displayedCartAmount)
             .toBe(0)
     }

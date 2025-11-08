@@ -51,9 +51,9 @@ describe(`Hamburger menu`, () => {
             await Login.open();
             await Login.login(validUser)
             await base.Hamburger.clickOpen()
-            await Inventory.addRandItemsToCart(3)
+            // await Inventory.addRandItemsToCart(3)
             
-            // await page.Hamburger.assertResetAppState()
+            await base.Hamburger.assertResetAppState()
         })
     })
 })
