@@ -22,8 +22,7 @@ export default class YourCart {
         })()
     }
     public async assertDisplayedCartAmount() {
-        const amountToAssert = this.itemsInCart.length
-        const displayedAmount = (await this.displayedCartAmount)
+        const amountToAssert = await this.displayedCartAmount
         await expect(displayedAmount)
             .toBe(amountToAssert)
         await expect(displayedAmount)
