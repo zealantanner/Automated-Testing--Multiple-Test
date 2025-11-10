@@ -2,7 +2,7 @@ import Cart from "../../pageobjects/cart";
 import Checkout from "../../pageobjects/checkout";
 import Inventory from "../../pageobjects/inventory";
 import InventoryItem from "../../pageobjects/inventory-item";
-import { range, shuffle, User } from "../../utils/utils";
+import { range, shuffle, str, User } from "../../utils/utils";
 
 
 
@@ -17,15 +17,14 @@ export const USERS = [
     new User("mispelled_user", "secret_sauce"),
     // new User(randstr(10), randstr(10)),
 ]
-
 export const validUser = USERS[0];
 
 
-export function pagesWithMenusRandomized() {
-    return shuffle([
-        () => Cart.open(),
-        () => Checkout.open(),
-        () => Inventory.open(),
-        () => InventoryItem.open(shuffle(range(0,5))[0])
-    ])
-}
+export const saucelabsUrl = "https://saucelabs.com"
+
+export const pagesWithMenusRandomized = shuffle([
+    () => Cart.open(),
+    () => Checkout.open(),
+    () => Inventory.open(),
+    () => InventoryItem.open(shuffle(range(0,5))[0])
+])

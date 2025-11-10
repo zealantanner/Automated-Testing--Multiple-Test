@@ -1,9 +1,22 @@
+import { browser, expect } from "@wdio/globals";
+import { displayDelay, User } from "../utils/utils";
+import Assertion from "./assertion";
 import Base from "../pageobjects/base";
 import Login from "../pageobjects/login";
+import Inventory from "../pageobjects/inventory";
 
 
 
-export default class LoginAssert {
-
-
+export default new class LoginAssert extends Assertion {
+    public async assertLogin(user:User) {
+        await Login.open()
+        await Login.login(user)
+        if(user.isValid) {
+            await this.assertUrl(Inventory.baseUrl)
+        } else {
+            await this.assertUrl(Inventory.baseUrl, true)
+            await expect(Login.errorLoginMessage)
+                .toBeExisting()
+        }
+    }
 }

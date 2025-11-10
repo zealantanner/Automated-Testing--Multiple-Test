@@ -1,13 +1,46 @@
+import BurgerAssert from "../asserts/burgerAssert";
 
 
 
 
 describe(`Opening`, () => {
-    beforeEach("Login", async () => {
+    it(`Should open and close the burger menu from random page`, async () => {
+        await BurgerAssert.assertOpenAndClose()
+    })
+})
+
+describe(`Hamburger menu`, () => {
+    describe(`All Items button`, async () => {
+        it(`should assert "All Items" button`, async () => {
+            await BurgerAssert.assertAllItems()
+        })
+    })
+    describe(`About button`, async () => {
+        it(`should assert "About" button`, async () => {
+            await BurgerAssert.assertAbout()
+            // await BurgerAssert.assertAbout1()
+        })
+    })
+    describe(`Logout button`, async () => {
+        it(`should assert "Logout" button`, async () => {
+            await BurgerAssert.assertLogout()
+        })
+    })
+    describe(`Reset App State button`, async () => {
+        it(`should assert "Reset App State" button`, async () => {
+            await BurgerAssert.assertResetAppState()
+        })
+    })
+})
+
+
+describe(`Opening`, () => {
+    beforeEach(`Login`, async () => {
         await Login.open();
         await Login.login(validUser)
     })
     it(`Should open hamburger menu from random page`, async () => {
+        await 
         await base.openRandomPage()
         await base.BurgerMenu.assertOpen()
         await base.BurgerMenu.assertClose()
@@ -15,7 +48,7 @@ describe(`Opening`, () => {
 })
 
 describe(`Hamburger menu`, () => {
-    beforeEach("Login", async () => {
+    beforeEach(`Login`, async () => {
         await Login.open();
         await Login.login(validUser)
     })

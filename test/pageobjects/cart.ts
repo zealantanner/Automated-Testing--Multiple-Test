@@ -1,4 +1,4 @@
-import { browser, $, $$ } from "@wdio/globals";
+import { $, $$ } from "@wdio/globals";
 import { displayDelay } from "../utils/utils";
 import Base, { base } from "./base.ts";
 

@@ -1,7 +1,7 @@
 import { browser, $ } from "@wdio/globals";
 import BurgerMenu from "./base/burgerMenu.ts";
 import CartMenu from "./base/cartMenu.ts";
-import { int, shuffle, str } from "../utils/utils.ts";
+import { int, str } from "../utils/utils.ts";
 
 
 //> edit the jira tickets to work with this

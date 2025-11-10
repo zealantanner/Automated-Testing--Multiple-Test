@@ -1,6 +1,4 @@
-import { browser, $ } from "@wdio/globals"
-import { base } from "../base.ts";
-import { int } from "../../utils/utils.ts";
+import { $ } from "@wdio/globals"
 
 
 export default class CartMenu {

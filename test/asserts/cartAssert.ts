@@ -1,5 +1,6 @@
 import { browser, expect } from "@wdio/globals";
 import { displayDelay } from "../utils/utils";
+import Assertion from "./assertion";
 import Base from "../pageobjects/base";
 import Cart from "../pageobjects/cart";
 import Checkout from "../pageobjects/checkout";
@@ -8,7 +9,7 @@ import Inventory from "../pageobjects/inventory";
 
 
 
-export default class CartAssert {
+export default new class CartAssert extends Assertion {
     public async clickCheckout() {
         await Cart.clickCheckout() 
         await expect(browser)
