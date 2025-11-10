@@ -49,7 +49,9 @@ export function pagesWithMenus() {
     // ]
 }
 
-
+export async function myWaitForDisplayed(element:ChainablePromiseElement,isReverse=false) {
+    await element.waitForDisplayed({reverse:isReverse, timeout: 5000, })
+}
 
 
 // export function randIntFrom(...args) {

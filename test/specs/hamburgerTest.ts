@@ -11,8 +11,8 @@ describe(`Opening`, () => {
     })
     it(`Should open hamburger menu from random page`, async () => {
         await base.openRandomPage()
-        await base.Hamburger.assertOpen()
-        await base.Hamburger.assertClose()
+        await base.BurgerMenu.assertOpen()
+        await base.BurgerMenu.assertClose()
     })
 })
 
@@ -24,28 +24,28 @@ describe(`Hamburger menu`, () => {
     describe(`All Items button`, async () => {
         it(`should assert "All Items" button`, async () => {
             await base.openRandomPage()
-            await base.Hamburger.clickOpen()
-            await base.Hamburger.assertAllItems()
+            await base.BurgerMenu.clickOpen()
+            await base.BurgerMenu.assertAllItems()
         })
     })
     describe(`About button`, async () => {
         it(`should assert "About" button`, async () => {
             await base.openRandomPage()
-            await base.Hamburger.clickOpen()
-            await base.Hamburger.assertAbout()
+            await base.BurgerMenu.clickOpen()
+            await base.BurgerMenu.assertAbout()
         })
     })
     describe(`Logout button`, async () => {
         it(`should assert "Logout" button`, async () => {
             await base.openRandomPage()
-            await base.Hamburger.clickOpen()
-            await base.Hamburger.assertLogout()
+            await base.BurgerMenu.clickOpen()
+            await base.BurgerMenu.assertLogout()
         })
     })
     describe(`Reset App State button`, async () => {
         it(`should assert "Reset App State" button`, async () => {
-            await base.Hamburger.clickOpen()
-            await base.Hamburger.assertResetAppState()
+            await base.BurgerMenu.clickOpen()
+            await base.BurgerMenu.assertResetAppState()
         })
     })
 })

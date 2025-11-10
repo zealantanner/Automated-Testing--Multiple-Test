@@ -64,6 +64,7 @@ export default class HamburgerMenu {
         await this.menu.waitForDisplayed({ timeout: base.delay })
         await this.btnAbout.waitForDisplayed({ timeout: base.delay })
         await this.btnAbout.click()
+        //> check if it's clickable
     }
     public async assertAbout() {
         await expect(this.btnAbout)
@@ -95,7 +96,7 @@ export default class HamburgerMenu {
         const itemAmount = 3
         const beforeAmount = await base.Cart.displayedCartAmount
         for(const one of shuffle(range(1,itemAmount))) {
-            await Inventory.assertWhateverAddAnItem(one)
+            await Inventory.assertAddItem(one)
         }
         await expect(await base.Cart.displayedCartAmount)
             .toBe(itemAmount+beforeAmount)
