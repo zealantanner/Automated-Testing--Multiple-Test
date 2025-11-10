@@ -19,7 +19,7 @@ class InventoryItem extends Base {
     }
     
     /** @param urlWithID https://www.saucedemo.com/inventory-item.html?id={{ID}} */
-    public urlWithID(itemID:int) {
+    public baseUrlWithID(itemID:int) {
         const url = new URL(this.baseUrl)
         url.searchParams.set("id", itemID.toString())
         this._itemID = itemID
@@ -28,7 +28,7 @@ class InventoryItem extends Base {
 
     public async open(itemID:any) {
         this._itemID = itemID
-        await super.open(this.urlWithID(itemID));
+        await super.open(this.baseUrlWithID(itemID));
     }
 }
 

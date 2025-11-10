@@ -1,8 +1,6 @@
-import { expect, $$ } from "@wdio/globals";
-import { int, range, shuffle } from "../utils/utils.ts"
+import { $$ } from "@wdio/globals";
+import { int, displayDelay } from "../utils/utils.ts"
 import Base, { base } from "./base.ts";
-import Item from "../utils/item.ts";
-import Cart from "./cart.ts";
 
 
 class Inventory extends Base {
@@ -24,9 +22,9 @@ class Inventory extends Base {
 
     public async addItem(index:int=0) {
         const btn = this.btnsAddToCart[index]
-        await btn.waitForDisplayed({ timeout: base.delay })
+        await btn.waitForDisplayed({ timeout: displayDelay })
         await btn.click()
-        await btn.waitForDisplayed({ reverse:true, timeout: base.delay })
+        await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
     }
     public async addItems(amount:int=1) {
         for (let i = 0; i < amount; i++) {
@@ -35,16 +33,16 @@ class Inventory extends Base {
     }
     public async addAllItems() {
         for(const btn of this.btnsAddToCart) {
-            await btn.waitForDisplayed({ timeout: base.delay })
+            await btn.waitForDisplayed({ timeout: displayDelay })
             await btn.click()
-            await btn.waitForDisplayed({ reverse:true, timeout: base.delay })
+            await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
     public async removeItem(index:int=0) {
         const btn = this.btnsRemove[index]
-        await btn.waitForDisplayed({ timeout: base.delay })
+        await btn.waitForDisplayed({ timeout: displayDelay })
         await btn.click()
-        await btn.waitForDisplayed({ reverse:true, timeout: base.delay })
+        await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
     }
     public async removeItems(amount:int=1) {
         for (let i = 0; i < amount; i++) {
@@ -53,35 +51,36 @@ class Inventory extends Base {
     }
     public async removeAllItems() {
         for(const btn of this.btnsRemove) {
-            await btn.waitForDisplayed({ timeout: base.delay })
+            await btn.waitForDisplayed({ timeout: displayDelay })
             await btn.click()
-            await btn.waitForDisplayed({ reverse:true, timeout: base.delay })
+            await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
-    public async assertAddItem(index:int=0) {
-        const amountBefore = await this.btnsAddToCart.length
-        await this.addItem(index)
-        const amountAfter = await this.btnsAddToCart.length
-        await expect(amountBefore-1)
-            .toBe(amountAfter)
-    }
-    public async assertRemoveItem(index:int=0) {
-        const amountBefore = await this.btnsRemove.length
-        await this.removeItem(index)
-        const amountAfter = await this.btnsRemove.length
-        await expect(amountBefore-1)
-            .toBe(amountAfter)
-    }
-    public async assertAddAllItems() {
-        await this.addAllItems()
-        await expect(await this.btnsAddToCart.length)
-            .toBe(0)
-    }
-    public async assertRemoveAllItems() {
-        await this.removeAllItems()
-        await expect(await this.btnsRemove.length)
-            .toBe(0)
-    }
+    //>assert
+    // public async assertAddItem(index:int=0) {
+    //     const amountBefore = await this.btnsAddToCart.length
+    //     await this.addItem(index)
+    //     const amountAfter = await this.btnsAddToCart.length
+    //     await expect(amountBefore-1)
+    //         .toBe(amountAfter)
+    // }
+    // public async assertRemoveItem(index:int=0) {
+    //     const amountBefore = await this.btnsRemove.length
+    //     await this.removeItem(index)
+    //     const amountAfter = await this.btnsRemove.length
+    //     await expect(amountBefore-1)
+    //         .toBe(amountAfter)
+    // }
+    // public async assertAddAllItems() {
+    //     await this.addAllItems()
+    //     await expect(await this.btnsAddToCart.length)
+    //         .toBe(0)
+    // }
+    // public async assertRemoveAllItems() {
+    //     await this.removeAllItems()
+    //     await expect(await this.btnsRemove.length)
+    //         .toBe(0)
+    // }
 
 
     /** @param subUrl inventory.html */

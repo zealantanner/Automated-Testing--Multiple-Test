@@ -1,4 +1,4 @@
-import Login, {  USERS } from '../pageobjects/login.ts'
+import Login, { USERS } from '../pageobjects/login.ts'
 
 
 describe("Login", () => {
