@@ -2,8 +2,8 @@ import { $ } from "@wdio/globals"
 
 
 export default class CartMenu {
-    private get link() { return $('a.shopping_cart_link') }
-    private get cartAmountIcon() { return this.link.$('span.shopping_cart_badge') }
+    public get link() { return $('a.shopping_cart_link') }
+    public get cartAmountIcon() { return this.link.$('span.shopping_cart_badge') }
 
     public get displayedCartAmount() {
         return (async () => {

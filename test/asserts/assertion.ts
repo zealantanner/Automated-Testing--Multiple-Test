@@ -1,6 +1,7 @@
 import { browser, expect } from "@wdio/globals";
 import { shuffle, str } from "../utils/utils";
-import { pagesWithMenusRandomized } from "./utils/assertutils";
+import { pagesWithMenusRandomized, validUser } from "./utils/assertutils";
+import Login from "../pageobjects/login";
 
 
 
@@ -26,6 +27,11 @@ export default class Assertion {
         //     )
         // }
     }
+    protected async preAssert() {
+        await Login.open()
+        await Login.login(validUser)
+    }
+    
     protected async openRandomPageHasMenu() {
         shuffle(pagesWithMenusRandomized)[0]()
     }

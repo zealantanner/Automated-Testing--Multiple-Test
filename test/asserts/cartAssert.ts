@@ -38,24 +38,30 @@ export default new class CartAssert extends Assertion {
         await this.assertUrl(Inventory.baseUrl)
     }
     public async assertCartIconNumber() {
-
+        base.Cart.displayedCartAmount
+        await this.preAssert()
     }
     public async assertCartClickDirect() {
-
+        await this.preAssert()
+        //>just add these and then I'm done
     }
     public async assertCartCRUD() {
-
+        await this.preAssert()
+        
     }
     public async assertRemovingItems() {
-
+        await this.preAssert()
+        
     }
     public async assertBtnContinueShopping() {
-
+        await this.preAssert()
     }
     public async assertBtnCheckout() {
-
+        await this.preAssert()
+        
     }
     public async assertItemLinks() {
+        await this.preAssert()
 
     }
 }

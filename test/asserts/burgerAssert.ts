@@ -1,6 +1,6 @@
 import { browser, expect } from "@wdio/globals";
 import { bool, displayDelay, int, range } from "../utils/utils";
-import { saucelabsUrl, validUser } from "./utils/assertutils";
+import { saucelabsUrl } from "./utils/assertutils";
 import Assertion from "./assertion";
 import { base } from "../pageobjects/base";
 import Inventory from "../pageobjects/inventory";
@@ -13,8 +13,7 @@ export default new class BurgerAssert extends Assertion {
     private get isOpen() { return base.BurgerMenu.menu.isDisplayed() }
     
     public async assertOpenAndClose(pagesToTry:int) {
-        await Login.open()
-        await Login.login(validUser)
+        await this.preAssert()
         await this.assertUrl(Inventory.baseUrl)
         for (let _ of range(1,pagesToTry)) {
             await this.openRandomPageHasMenu()
@@ -28,23 +27,21 @@ export default new class BurgerAssert extends Assertion {
                 .toBe(false)
         }
     }
-    public async assertAllItems() {
-        await Login.open()
-        await Login.login(validUser)
+    public async preAssert() {
+        await super.preAssert()
         await this.openRandomPageHasMenu()
         await base.BurgerMenu.clickOpen()
-        await expect(base.BurgerMenu.btnAllItems)
+        await expect(base.BurgerMenu.menu)
             .toBeDisplayed()
+    }
+
+    public async assertAllItems() {
+        await this.preAssert()
         await base.BurgerMenu.clickAllItems()
         await this.assertUrl(Inventory.baseUrl)
     }
     public async assertAbout(real:bool=true) {
-        await Login.open()
-        await Login.login(validUser)
-        await this.openRandomPageHasMenu()
-        await base.BurgerMenu.clickOpen()
-        await expect(base.BurgerMenu.btnAbout)
-            .toBeDisplayed()
+        await this.preAssert()
         const link = await base.BurgerMenu.btnAbout.getAttribute('href')
         await expect(link)
             .toContain(saucelabsUrl)
@@ -57,12 +54,7 @@ export default new class BurgerAssert extends Assertion {
         }
     }
     public async assertLogout() {
-        await Login.open()
-        await Login.login(validUser)
-        await this.openRandomPageHasMenu()
-        await base.BurgerMenu.clickOpen()
-        await expect(base.BurgerMenu.btnLogout)
-            .toBeDisplayed()
+        await this.preAssert()
         await base.BurgerMenu.clickLogout()
         await base.BurgerMenu.btnOpen.waitForDisplayed({ reverse:true, timeout: displayDelay })
         await this.assertUrl(Login.baseUrl)
@@ -70,8 +62,7 @@ export default new class BurgerAssert extends Assertion {
             .toHaveLength(0)
     }
     public async assertResetAppState(itemAmount:int=3) {
-        await Login.open()
-        await Login.login(validUser)
+        await super.preAssert()
         const beforeAmount = await base.Cart.displayedCartAmount
         console.log(beforeAmount)
         await Inventory.addItems(3)
@@ -83,7 +74,7 @@ export default new class BurgerAssert extends Assertion {
         await expect(await base.Cart.displayedCartAmount)
             .toBe(0)
         browser.refresh()
-        await Inventory.open() //------------------- need to refresh
+        await Inventory.open() // need to refresh
         await expect(await Inventory.btnsRemove.length)
             .toBe(0)
     }
