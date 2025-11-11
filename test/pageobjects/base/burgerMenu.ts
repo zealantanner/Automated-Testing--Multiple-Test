@@ -24,22 +24,18 @@ export default class BurgerMenu {
     
     public async clickAllItems() {
         await this.menu.waitForDisplayed({ timeout: displayDelay })
-        await this.btnAllItems.waitForDisplayed({ timeout: displayDelay })
         await this.btnAllItems.click()
     }
     public async clickAbout() {
         await this.menu.waitForDisplayed({ timeout: displayDelay })
-        await this.btnAbout.waitForDisplayed({ timeout: displayDelay })
         await this.btnAbout.click()
     }
     public async clickLogout() {
         await this.menu.waitForDisplayed({ timeout: displayDelay })
-        await this.btnLogout.waitForDisplayed({ timeout: displayDelay })
         await this.btnLogout.click()
     }
     public async clickResetAppState() {
         await this.menu.waitForDisplayed({ timeout: displayDelay })
-        await this.btnResetAppState.waitForDisplayed({ timeout: displayDelay })
         await this.btnResetAppState.click()
     }
 }

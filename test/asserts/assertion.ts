@@ -1,21 +1,25 @@
 import { browser, expect } from "@wdio/globals";
-import { shuffle, str } from "../utils/utils";
+import { displayDelay, shuffle, str } from "../utils/utils";
 import { pagesWithMenusRandomized } from "./utils/assertutils";
 
 
 
 
 export default class Assertion {
-    public async assertUrl(link:str, not=false) {
+    protected async assertUrl(link:str, not=false) {
         if(not) {
-            await expect(browser)
-                .not.toHaveUrl(link)
+            await browser.waitUntil(
+                async () => (await browser.getUrl()) !== link,
+                { timeout: displayDelay }
+            )
         } else {
-            await expect(browser)
-                .toHaveUrl(link)
+            await browser.waitUntil(
+                async () => (await browser.getUrl()) === link,
+                { timeout: displayDelay }
+            )
         }
     }
-    public async openRandomPageHasMenu() {
+    protected async openRandomPageHasMenu() {
         shuffle(pagesWithMenusRandomized)[0]()
     }
 }

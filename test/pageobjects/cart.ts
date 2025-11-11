@@ -1,6 +1,6 @@
 import { $, $$ } from "@wdio/globals";
 import { displayDelay } from "../utils/utils";
-import Base, { base } from "./base.ts";
+import Base from "./base.ts";
 
 
 

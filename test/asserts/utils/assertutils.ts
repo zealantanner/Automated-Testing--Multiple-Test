@@ -19,7 +19,6 @@ export const USERS = [
 ]
 export const validUser = USERS[0];
 
-
 export const saucelabsUrl = "https://saucelabs.com"
 
 export const pagesWithMenusRandomized = shuffle([

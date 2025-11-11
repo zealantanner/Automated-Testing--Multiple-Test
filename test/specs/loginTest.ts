@@ -1,4 +1,5 @@
-import Login, { USERS } from '../pageobjects/login.ts'
+import { USERS } from '../asserts/utils/assertutils.ts'
+import Login from '../pageobjects/login.ts'
 
 
 describe("Login", () => {

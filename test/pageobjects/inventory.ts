@@ -1,6 +1,6 @@
 import { $$ } from "@wdio/globals";
-import { int, displayDelay } from "../utils/utils.ts"
-import Base, { base } from "./base.ts";
+import { int, displayDelay, shuffle, range } from "../utils/utils.ts"
+import Base from "./base.ts";
 
 
 class Inventory extends Base {
@@ -16,44 +16,46 @@ class Inventory extends Base {
         }
         return undefined
     }
-    private get btnsAddToCart() { return $$('.btn_inventory[id^="add-to-cart"]') }
-    private get btnsRemove() { return $$('.btn_inventory[id^="remove"]') }
+    public get btnsAddToCart() { return $$('.btn_inventory[id^="add-to-cart"]') }
+    public get btnsRemove() { return $$('.btn_inventory[id^="remove"]') }
 
 
-    public async addItem(index:int=0) {
-        const btn = this.btnsAddToCart[index]
-        await btn.waitForDisplayed({ timeout: displayDelay })
-        await btn.click()
-        await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
+    public async addItem(index?:int) {
+        const btns = this.btnsAddToCart;
+        const totalBtns = await btns.length
+        if(totalBtns > 0) {
+            index = index ?? shuffle(range(0,totalBtns-1))[0]
+            const btn = btns[index]
+
+            await btn.waitForDisplayed({ timeout: displayDelay })
+            await btn.click()
+            await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
+        }
     }
-    public async addItems(amount:int=1) {
-        for (let i = 0; i < amount; i++) {
+    public async addItems(amount?:int) {
+        const totalBtns = await this.btnsAddToCart.length
+        const itemsToAdd = amount ?? totalBtns
+        for (let i = 0; i < itemsToAdd; i++) {
             await this.addItem()
         }
     }
-    public async addAllItems() {
-        for(const btn of this.btnsAddToCart) {
+    public async removeItem(index?:int) {
+        const btns = this.btnsRemove;
+        const totalBtns = await btns.length
+        if(totalBtns > 0) {
+            index = index ?? shuffle(range(0,totalBtns-1))[0]
+            const btn = btns[index]
+
             await btn.waitForDisplayed({ timeout: displayDelay })
             await btn.click()
             await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
-    public async removeItem(index:int=0) {
-        const btn = this.btnsRemove[index]
-        await btn.waitForDisplayed({ timeout: displayDelay })
-        await btn.click()
-        await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
-    }
-    public async removeItems(amount:int=1) {
-        for (let i = 0; i < amount; i++) {
+    public async removeItems(amount?:int) {
+        const totalBtns = await this.btnsRemove.length
+        const itemsToRemove = amount ?? totalBtns
+        for (let i = 0; i < itemsToRemove; i++) {
             await this.removeItem()
-        }
-    }
-    public async removeAllItems() {
-        for(const btn of this.btnsRemove) {
-            await btn.waitForDisplayed({ timeout: displayDelay })
-            await btn.click()
-            await btn.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
     //>assert
