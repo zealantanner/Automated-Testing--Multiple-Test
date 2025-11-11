@@ -41,30 +41,34 @@ export class Item {
         return this.root.$('button[id^="add-to-cart"]')
     }
     public async clickAdd() {
+        await this.btnAddToCart.waitForDisplayed({ timeout: displayDelay })
         await this.btnAddToCart.click()
     }
     public get btnRemove() {
         return this.root.$('button[id^="remove"]')
     }
     public async clickRemove() {
+        await this.btnRemove.waitForDisplayed({ timeout: displayDelay })
         await this.btnRemove.click()
     }
-    private get name() {
-        return this.root.$('.inventory_item_name')
+    public get link() {
+        return this.root.$('a[id^="item_"][id$="_title_link"]')
     }
-    public get id() {
-        return this.root
-            .$('[id^="item_"][id$="_title_link"]')
-            .getAttribute('id')
-            .then(idAttr => {
-                const match = idAttr.match(/item_(\d+)_title_link/)
-                return match ? parseInt(match[1]) : null
-            })
+    public async clickLink() {
+        await this.link.waitForDisplayed({ timeout: displayDelay })
+        await this.link.click()
+    }
+    public async getId() {
+        await this.link.waitForDisplayed({ timeout: displayDelay })
+        const idAttr = await this.link.getAttribute('id')
+        const match = idAttr.match(/item_(\d+)_title_link/)
+        return match ? match[1] : "-1"
     }
     public get inCart() {
         return this.btnRemove.isExisting()
     }
-    public async getNameText() {
-        return await this.name.getText();
+    public async getTitle() {
+        await this.link.waitForDisplayed({ timeout: displayDelay })
+        return await this.link.$('.inventory_item_name').getText();
     }
 }

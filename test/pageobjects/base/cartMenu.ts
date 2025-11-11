@@ -2,8 +2,8 @@ import { $ } from "@wdio/globals"
 
 
 export default class CartMenu {
-    public get link() { return $('a.shopping_cart_link') }
-    public get cartAmountIcon() { return this.link.$('span.shopping_cart_badge') }
+    public get linkIcon() { return $('a.shopping_cart_link') }
+    public get cartAmountIcon() { return this.linkIcon.$('span.shopping_cart_badge') }
 
     public get displayedCartAmount() {
         return (async () => {
@@ -23,8 +23,8 @@ export default class CartMenu {
     //         .toBeGreaterThanOrEqual(0)
     // }
     
-    public async click() {
-        await this.link.click()
+    public async clickIcon() {
+        await this.linkIcon.click()
     }
     //>assert
     // public async assertClick() {

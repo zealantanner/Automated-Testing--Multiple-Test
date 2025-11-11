@@ -63,18 +63,20 @@ export default new class BurgerAssert extends Assertion {
     }
     public async assertResetAppState(itemAmount:int=3) {
         await super.preAssert()
-        const beforeAmount = await base.Cart.displayedCartAmount
+        const beforeAmount = await base.CartMenu.displayedCartAmount
         console.log(beforeAmount)
         await Inventory.addItems(3)
 
-        await expect(await base.Cart.displayedCartAmount)
+        await expect(await base.CartMenu.displayedCartAmount)
             .toBe(itemAmount+beforeAmount)
         await base.BurgerMenu.clickOpen()
         await base.BurgerMenu.clickResetAppState()
-        await expect(await base.Cart.displayedCartAmount)
+        await expect(await base.CartMenu.displayedCartAmount)
             .toBe(0)
         browser.refresh()
-        await Inventory.open() // need to refresh
+        await Inventory.open() // need to refresh in order to pass
+        //> fails here, ON PURPOSE (if you don't refresh)
+        //> also fails on the cart page
         await expect(await Inventory.btnsRemove.length)
             .toBe(0)
     }

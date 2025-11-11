@@ -1,6 +1,5 @@
-import { $ } from "@wdio/globals";
 import Cart from "../../pageobjects/cart";
-import Checkout from "../../pageobjects/checkout";
+import Checkout1 from "../../pageobjects/checkout1";
 import Inventory from "../../pageobjects/inventory";
 import InventoryItem from "../../pageobjects/inventory-item";
 import { range, shuffle, User } from "../../utils/utils";
@@ -24,21 +23,8 @@ export const saucelabsUrl = "https://saucelabs.com"
 
 export const pagesWithMenusRandomized = shuffle([
     () => Cart.open(),
-    () => Checkout.open(),
+    () => Checkout1.open(),
     () => Inventory.open(),
     () => InventoryItem.open(shuffle(range(0,5))[0])
 ])
 
-export class Item {
-    constructor(private root: ChainablePromiseElement) {}
-    public get cartBtnRemove() {
-        return this.root.$('.cart_button[id^="remove"]')
-    }
-    private get name() {
-        return this.root.$('.inventory_item_name')
-    }
-
-    public async getNameText() {
-        return await this.name.getText();
-    }
-}

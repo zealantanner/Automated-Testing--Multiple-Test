@@ -2,7 +2,7 @@ import Base from "./base";
 
 
 
-class Checkout extends Base {
+class Checkout1 extends Base {
     /** @param subUrl checkout-step-one.html */
     public get subUrl() { return "checkout-step-one.html" }
     /** @param baseUrl https://www.saucedemo.com/checkout-step-one.html */
@@ -13,4 +13,4 @@ class Checkout extends Base {
 }
 
 
-export default new Checkout();
+export default new Checkout1();

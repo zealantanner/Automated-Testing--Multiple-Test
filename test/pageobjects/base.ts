@@ -8,7 +8,7 @@ import { str } from "../utils/utils";
 /** base page */
 export default class Base {
     public get BurgerMenu() { return new BurgerMenu() }
-    public get Cart() { return new CartMenu() }
+    public get CartMenu() { return new CartMenu() }
     public get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
 
     /** @param baseUrl https://www.saucedemo.com */

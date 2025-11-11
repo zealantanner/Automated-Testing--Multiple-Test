@@ -10,6 +10,9 @@ class Cart extends Base {
     public get items() {
         return $$('.cart_list .cart_item').map(el => new Item(el))
     }
+    public async getItemsInCart() {
+        return this.items
+    }
 
     public async removeItem(index?:int) {
         const total = (await this.items).length
@@ -31,7 +34,7 @@ class Cart extends Base {
 
     public get btnCheckout() { return $('button#checkout') }
     
-    public async clickCheckout() {
+    public async clickBtnCheckout() {
         await this.btnCheckout.waitForDisplayed({ timeout: displayDelay })
         await this.btnCheckout.click()
         await this.btnCheckout.waitForDisplayed({ reverse:true, timeout: displayDelay })

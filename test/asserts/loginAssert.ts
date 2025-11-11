@@ -1,7 +1,6 @@
 import { browser, expect } from "@wdio/globals";
-import { displayDelay, User } from "../utils/utils";
+import { User } from "../utils/utils";
 import Assertion from "./assertion";
-import Base from "../pageobjects/base";
 import Login from "../pageobjects/login";
 import Inventory from "../pageobjects/inventory";
 

@@ -1,14 +1,12 @@
 import { USERS } from '../asserts/utils/assertutils.ts'
-import Login from '../pageobjects/login.ts'
+import LoginAssert from '../asserts/loginAssert.ts'
+
 
 
 describe("Login", () => {
     for(const user of USERS) {
-        before(`reset`, () => {
-            Login.quickReset()
-        })
         it(`${user.isValid ? "allows":"denies"} ${user.username} to log in`, async () => {
-            await Login.assertLogin(user,)
+            await LoginAssert.assertLogin(user)
         })
     }
 })
