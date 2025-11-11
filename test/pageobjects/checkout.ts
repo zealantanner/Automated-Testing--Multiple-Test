@@ -1,4 +1,4 @@
-import Base from "./base.ts";
+import Base from "./base";
 
 
 

@@ -1,7 +1,7 @@
 import { browser, $ } from "@wdio/globals";
-import BurgerMenu from "./base/burgerMenu.ts";
-import CartMenu from "./base/cartMenu.ts";
-import { int, str } from "../utils/utils.ts";
+import BurgerMenu from "./base/burgerMenu";
+import CartMenu from "./base/cartMenu";
+import { str } from "../utils/utils";
 
 
 //> edit the jira tickets to work with this
@@ -9,8 +9,7 @@ import { int, str } from "../utils/utils.ts";
 export default class Base {
     public get BurgerMenu() { return new BurgerMenu() }
     public get Cart() { return new CartMenu() }
-    protected get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
-    readonly delay:int = 5000;
+    public get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
 
     /** @param baseUrl https://www.saucedemo.com */
     public get baseUrl() { return new URL("https://www.saucedemo.com").toString() }

@@ -1,8 +1,8 @@
 import { browser, expect } from "@wdio/globals";
-import { bool, displayDelay, int, range, shuffle } from "../utils/utils";
+import { bool, displayDelay, int, range } from "../utils/utils";
 import { saucelabsUrl, validUser } from "./utils/assertutils";
 import Assertion from "./assertion";
-import Base, { base } from "../pageobjects/base";
+import { base } from "../pageobjects/base";
 import Inventory from "../pageobjects/inventory";
 import Login from "../pageobjects/login";
 
@@ -72,7 +72,6 @@ export default new class BurgerAssert extends Assertion {
     public async assertResetAppState(itemAmount:int=3) {
         await Login.open()
         await Login.login(validUser)
-        // await Inventory.open()
         const beforeAmount = await base.Cart.displayedCartAmount
         console.log(beforeAmount)
         await Inventory.addItems(3)

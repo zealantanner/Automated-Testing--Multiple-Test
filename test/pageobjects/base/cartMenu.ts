@@ -29,8 +29,7 @@ export default class CartMenu {
     //>assert
     // public async assertClick() {
     //     await this.click()
-    //     await expect(browser)
-    //         .toHaveUrl(base.baseUrl)
+    //     await this.assertUrl(base.baseUrl)
     // }
 
 }

@@ -1,7 +1,7 @@
 import { browser, expect } from "@wdio/globals";
 import { displayDelay } from "../utils/utils";
 import Assertion from "./assertion";
-import Base from "../pageobjects/base";
+import { base } from "../pageobjects/base";
 import Cart from "../pageobjects/cart";
 import Checkout from "../pageobjects/checkout";
 import Login from "../pageobjects/login";
@@ -11,9 +11,8 @@ import Inventory from "../pageobjects/inventory";
 
 export default new class CartAssert extends Assertion {
     public async clickCheckout() {
-        await Cart.clickCheckout() 
-        await expect(browser)
-            .toHaveUrl(Checkout.baseUrl)
+        await Cart.clickCheckout()
+        await this.assertUrl(Checkout.baseUrl)
     }
 
     public async clickBtnRemove(index=0) {
@@ -36,8 +35,27 @@ export default new class CartAssert extends Assertion {
         await Cart.btnContinueShopping.waitForDisplayed({ reverse:true, timeout: displayDelay })
         await expect(Cart.btnContinueShopping)
             .not.toBeExisting()
-        await expect(browser)
-            .toHaveUrl(Inventory.baseUrl)
+        await this.assertUrl(Inventory.baseUrl)
     }
+    public async assertCartIconNumber() {
 
+    }
+    public async assertCartClickDirect() {
+
+    }
+    public async assertCartCRUD() {
+
+    }
+    public async assertRemovingItems() {
+
+    }
+    public async assertBtnContinueShopping() {
+
+    }
+    public async assertBtnCheckout() {
+
+    }
+    public async assertItemLinks() {
+
+    }
 }

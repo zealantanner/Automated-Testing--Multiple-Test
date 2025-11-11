@@ -1,5 +1,5 @@
 import { $ } from "@wdio/globals";
-import { displayDelay } from "../../utils/utils.ts";
+import { displayDelay } from "../../utils/utils";
 
 
 export default class BurgerMenu {
