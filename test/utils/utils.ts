@@ -23,15 +23,12 @@ export function shuffle<T>(array:T[]):T[] {
     .map(({ value }) => value)
 }
 
-export async function myWaitForDisplayed(element:ChainablePromiseElement,isReverse=false) {
-    await element.waitForDisplayed({reverse:isReverse, timeout: 5000, })
-}
 
 export class User {
     constructor(
         public username:str,
         public password:str,
-        public isValid:bool=false,
+        public isValid:bool = false,
     ) {}
 }
 
@@ -41,25 +38,21 @@ export class Item {
         return this.root.$('button[id^="add-to-cart"]')
     }
     public async clickAdd() {
-        await this.btnAddToCart.waitForDisplayed({ timeout: displayDelay })
         await this.btnAddToCart.click()
     }
     public get btnRemove() {
         return this.root.$('button[id^="remove"]')
     }
     public async clickRemove() {
-        await this.btnRemove.waitForDisplayed({ timeout: displayDelay })
         await this.btnRemove.click()
     }
     public get link() {
         return this.root.$('a[id^="item_"][id$="_title_link"]')
     }
     public async clickLink() {
-        await this.link.waitForDisplayed({ timeout: displayDelay })
         await this.link.click()
     }
     public async getId() {
-        await this.link.waitForDisplayed({ timeout: displayDelay })
         const idAttr = await this.link.getAttribute('id')
         const match = idAttr.match(/item_(\d+)_title_link/)
         return match ? match[1] : "-1"
@@ -68,7 +61,6 @@ export class Item {
         return this.btnRemove.isExisting()
     }
     public async getTitle() {
-        await this.link.waitForDisplayed({ timeout: displayDelay })
         return await this.link.$('.inventory_item_name').getText();
     }
 }

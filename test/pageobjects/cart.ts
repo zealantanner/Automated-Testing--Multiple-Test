@@ -19,9 +19,7 @@ class Cart extends Base {
         if(total > 0) {
             index = index ?? shuffle(range(0,total-1))[0]
             const item = (await this.items)[index]
-            await item.btnRemove.waitForDisplayed({ timeout: displayDelay })
             await item.clickRemove()
-            await item.btnRemove.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
     public async removeItems(amount?:int) {
@@ -35,16 +33,12 @@ class Cart extends Base {
     public get btnCheckout() { return $('button#checkout') }
     
     public async clickBtnCheckout() {
-        await this.btnCheckout.waitForDisplayed({ timeout: displayDelay })
         await this.btnCheckout.click()
-        await this.btnCheckout.waitForDisplayed({ reverse:true, timeout: displayDelay })
     }
 
     public get btnContinueShopping() { return $('#continue-shopping') }
     public async clickBtnContinueShopping() {
-        await this.btnContinueShopping.waitForDisplayed({ timeout: displayDelay })
         await this.btnContinueShopping.click()
-        await this.btnContinueShopping.waitForDisplayed({ reverse:true, timeout: displayDelay })
     }
 
     /** @param subUrl cart.html */

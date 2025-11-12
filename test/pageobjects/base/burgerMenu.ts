@@ -6,14 +6,12 @@ export default class BurgerMenu {
     public get menu() { return $('.bm-menu-wrap') }
     public get btnOpen() { return $('button#react-burger-menu-btn') }
     public get btnClose() { return $('button#react-burger-cross-btn') }
-
+    public readonly openDelay = 5000
     public async clickOpen() {
-        await this.btnOpen.waitForDisplayed({ timeout: displayDelay })
         await this.btnOpen.click()
     }
     public async clickClose() {
-        await this.menu.waitForDisplayed({ timeout: displayDelay })
-        await this.btnClose.waitForDisplayed({ timeout: displayDelay })
+        await this.btnClose.waitForDisplayed({ timeout: this.openDelay })
         await this.btnClose.click()
     }
 
@@ -23,19 +21,15 @@ export default class BurgerMenu {
     public get btnResetAppState() { return $('#reset_sidebar_link') }
     
     public async clickAllItems() {
-        await this.menu.waitForDisplayed({ timeout: displayDelay })
         await this.btnAllItems.click()
     }
     public async clickAbout() {
-        await this.menu.waitForDisplayed({ timeout: displayDelay })
         await this.btnAbout.click()
     }
     public async clickLogout() {
-        await this.menu.waitForDisplayed({ timeout: displayDelay })
         await this.btnLogout.click()
     }
     public async clickResetAppState() {
-        await this.menu.waitForDisplayed({ timeout: displayDelay })
         await this.btnResetAppState.click()
     }
 }

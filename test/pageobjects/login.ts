@@ -16,11 +16,8 @@ class Login extends Base {
     public isLoggedIn = false;
     
     public async login(user:User) {
-        await this.inputUsername.waitForDisplayed({ timeout: displayDelay })
         await this.inputUsername.setValue(user.username);
-        await this.inputPassword.waitForDisplayed({ timeout: displayDelay })
         await this.inputPassword.setValue(user.password);
-        await this.btnConfirm.waitForDisplayed({ timeout: displayDelay })
         await this.btnConfirm.click();
         this.isLoggedIn = user.isValid
     }

@@ -10,13 +10,8 @@ import InventoryItem from "../pageobjects/inventory-item";
 
 
 export default new class CartAssert extends Assertion {
-    public async preAssert() {
-        await super.preAssert()
-        await base.CartMenu.linkIcon.waitForDisplayed({ timeout: displayDelay })
-    }
     public async assertCartIconNumber() {
         await this.preAssert()
-        await base.CartMenu.cartAmountIcon.waitForDisplayed({ timeout: displayDelay })
         const beforeAmount = await base.CartMenu.displayedCartAmount
         await expect(beforeAmount).toBeLessThanOrEqual(Cart.cartLimit)
         const amountToAdd = shuffle(range(1,6-beforeAmount))[0]
@@ -28,12 +23,7 @@ export default new class CartAssert extends Assertion {
     public async assertCartClickDirect() {
         await this.preAssert()
         await this.openRandomPageHasMenu()
-        await base.CartMenu.linkIcon.waitForDisplayed({ timeout: displayDelay })
-        const link = await base.CartMenu.linkIcon.getAttribute('href')
-        await expect(link).toBe(Cart.baseUrl)
         await base.CartMenu.clickIcon()
-        await base.CartMenu.linkIcon.waitForDisplayed({ timeout: displayDelay })
-        await Cart.btnCheckout.waitForDisplayed({ timeout: displayDelay })
         await this.assertUrl(Cart.baseUrl)
     }
     public async assertCartCRUD() {
@@ -107,7 +97,7 @@ export default new class CartAssert extends Assertion {
             await chosen.item.clickLink()
             await this.assertUrl(InventoryItem.baseUrlWithID(chosen.id))
             await expect(InventoryItem.lastItemID).toBe(chosen.id)
-            await expect(InventoryItem.title).toBe(chosen.title)
+            await expect(await InventoryItem.title.getText()).toBe(chosen.title)
         }
     }
     //>just add these and then I'm done

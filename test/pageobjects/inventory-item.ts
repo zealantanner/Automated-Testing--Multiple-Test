@@ -9,7 +9,6 @@ class InventoryItem extends Base {
     public get title() {
         return $('.inventory_details_name')
     }
-    
     /** @param subUrl inventory-item.html */
     public get subUrl() { return "inventory-item.html" }
     /** @param baseUrl https://www.saucedemo.com/inventory-item.html */

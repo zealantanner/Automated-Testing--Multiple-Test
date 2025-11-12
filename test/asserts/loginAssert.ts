@@ -10,14 +10,12 @@ export default new class LoginAssert extends Assertion {
     public async assertLogin(user:User) {
         await Login.open()
         await Login.login(user)
-        await expect(await browser.getCookies())
-            .not.toHaveLength(0)
+        await expect(await browser.getCookies()).not.toHaveLength(0)
         if(user.isValid) {
             await this.assertUrl(Inventory.baseUrl)
         } else {
             await this.assertUrl(Inventory.baseUrl, true)
-            await expect(Login.errorLoginMessage)
-                .toBeExisting()
+            await expect(Login.errorLoginMessage).toBeExisting()
         }
     }
 }

@@ -9,23 +9,10 @@ import Login from "../pageobjects/login";
 export default class Assertion {
     protected async assertUrl(link:str, reverse=false) {
         if(reverse) {
-            await expect(browser)
-                .not.toHaveUrl(link)
+            await expect(browser).not.toHaveUrl(link)
         } else {
-            await expect(browser)
-                .toHaveUrl(link)
+            await expect(browser).toHaveUrl(link)
         }
-        // if(reverse) {
-        //     await browser.waitUntil(
-        //         async () => (await browser.getUrl()) !== link,
-        //         { timeout: displayDelay }
-        //     )
-        // } else {
-        //     await browser.waitUntil(
-        //         async () => (await browser.getUrl()) === link,
-        //         { timeout: displayDelay }
-        //     )
-        // }
     }
     protected async preAssert() {
         await Login.open()

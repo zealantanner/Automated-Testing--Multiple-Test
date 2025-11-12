@@ -11,23 +11,23 @@ describe(`Opening`, () => {
 
 describe(`Burger menu`, () => {
     describe(`All Items button`, async () => {
-        it(`should assert "All Items" button`, async () => {
+        it(`should direct to inventory page`, async () => {
             await BurgerAssert.assertAllItems()
         })
     })
     describe(`About button`, async () => {
-        it(`should assert "About" button`, async () => {
+        it(`should direct to saucelabs page`, async () => {
             // await BurgerAssert.assertAbout()
             await BurgerAssert.assertAbout(false)
         })
     })
     describe(`Logout button`, async () => {
-        it(`should assert "Logout" button`, async () => {
+        it(`should log the user out`, async () => {
             await BurgerAssert.assertLogout()
         })
     })
     describe(`Reset App State button`, async () => {
-        it(`should assert "Reset App State" button`, async () => {
+        it(`should reset the status of items added to the cart`, async () => {
             await BurgerAssert.assertResetAppState()
         })
     })

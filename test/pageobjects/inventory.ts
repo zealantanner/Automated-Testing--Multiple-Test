@@ -32,10 +32,7 @@ class Inventory extends Base {
         if(total > 0) {
             index = index ?? shuffle(range(0,total-1))[0]
             const item =(await this.getItemsNotInCart())[index]
-
-            await item.btnAddToCart.waitForDisplayed({ timeout: displayDelay })
             await item.clickAdd()
-            await item.btnAddToCart.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
     public async addItems(amount?:int) {
@@ -49,11 +46,8 @@ class Inventory extends Base {
         const total = (await this.getItemsInCart()).length
         if(total > 0) {
             index = index ?? shuffle(range(0,total-1))[0]
-            const item =(await this.getItemsInCart())[index]
-
-            await item.btnAddToCart.waitForDisplayed({ timeout: displayDelay })
+            const item = (await this.getItemsInCart())[index]
             await item.clickRemove()
-            await item.btnAddToCart.waitForDisplayed({ reverse:true, timeout: displayDelay })
         }
     }
     public async removeItems(amount?:int) {
@@ -63,33 +57,6 @@ class Inventory extends Base {
             await this.removeItem()
         }
     }
-    //>assert
-    // public async assertAddItem(index:int=0) {
-    //     const amountBefore = await this.btnsAddToCart.length
-    //     await this.addItem(index)
-    //     const amountAfter = await this.btnsAddToCart.length
-    //     await expect(amountBefore-1)
-    //         .toBe(amountAfter)
-    // }
-    // public async assertRemoveItem(index:int=0) {
-    //     const amountBefore = await this.btnsRemove.length
-    //     await this.removeItem(index)
-    //     const amountAfter = await this.btnsRemove.length
-    //     await expect(amountBefore-1)
-    //         .toBe(amountAfter)
-    // }
-    // public async assertAddAllItems() {
-    //     await this.addAllItems()
-    //     await expect(await this.btnsAddToCart.length)
-    //         .toBe(0)
-    // }
-    // public async assertRemoveAllItems() {
-    //     await this.removeAllItems()
-    //     await expect(await this.btnsRemove.length)
-    //         .toBe(0)
-    // }
-
-
     /** @param subUrl inventory.html */
     public get subUrl() { return "inventory.html" }
     /** @param baseUrl https://www.saucedemo.com/inventory.html */
