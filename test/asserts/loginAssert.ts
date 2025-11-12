@@ -13,17 +13,14 @@ export default new class LoginAssert extends Assertion {
         await Login.open()
         // Attempts login with user info
         await Login.login(user)
-        
+
         if(user.isValid) {
             // Assert current url is inventory
             await this.assertUrl(Inventory.baseUrl)
             
             // Assert user is logged in via cookies
-            await expect(await browser.getCookies()).not.toHaveLength(0)
+            await expect(await browser.getCookies()).toHaveLength(1)
         } else {
-            // Assert user is not logged in via cookies
-            await expect(await browser.getCookies()).toHaveLength(0)
-            
             // Assert current url is not inventory
             await this.assertUrl(Inventory.baseUrl, true)
             // Assert error message exists

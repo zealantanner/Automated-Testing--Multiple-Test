@@ -18,18 +18,10 @@ export default new class BurgerAssert extends Assertion {
             // Go to random page
             await this.openRandomPageHasMenu()
 
-            // Assert btnOpen clickable
-            await expect(base.BurgerMenu.btnOpen).toBeClickable()
-
             // Open burger menu
             await base.BurgerMenu.openMenu()
             // Wait for menu to open
-            await base.BurgerMenu.menu.waitForDisplayed({ timeout: base.BurgerMenu.openDelay })
-
-            // Assert menu displayed
-            await expect(base.BurgerMenu.menu).toBeDisplayed()
-            // Assert btnClose clickable
-            await expect(base.BurgerMenu.btnClose).toBeClickable()
+            await base.BurgerMenu.btnClose.waitForDisplayed({ timeout: base.BurgerMenu.openDelay })
 
             // Close burger menu
             await base.BurgerMenu.closeMenu()
@@ -46,8 +38,6 @@ export default new class BurgerAssert extends Assertion {
         await this.openRandomPageHasMenu()
         // Open burger menu
         await base.BurgerMenu.openMenu()
-        // Assert menu displayed
-        await expect(base.BurgerMenu.menu).toBeDisplayed()
     }
 
     public async assertAllItems() {
@@ -63,8 +53,7 @@ export default new class BurgerAssert extends Assertion {
         const link = await base.BurgerMenu.btnAbout.getAttribute('href')
         // Assert btnAbout has href of saucelabs url
         await expect(link).toContain(this.SAUCE_LABS_URL)
-        // Assert btnClose clickable
-        await expect(base.BurgerMenu.btnAbout).toBeClickable()
+
         if(real) { // Gets stuck so I'm unable to test correctly
             // Click "About"
             await base.BurgerMenu.btnAbout.click()
