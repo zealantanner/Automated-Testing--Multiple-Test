@@ -21,7 +21,7 @@ export default new class BurgerAssert extends Assertion {
             // Open burger menu
             await base.BurgerMenu.openMenu()
             // Wait for menu to open
-            await base.BurgerMenu.btnClose.waitForDisplayed({ timeout: base.BurgerMenu.openDelay })
+            await base.BurgerMenu.btnClose.waitForEnabled({ timeout: base.BurgerMenu.openDelay })
 
             // Close burger menu
             await base.BurgerMenu.closeMenu()
@@ -42,6 +42,8 @@ export default new class BurgerAssert extends Assertion {
 
     public async assertAllItems() {
         await this.preAssert()
+        await base.BurgerMenu.btnAllItems.waitForEnabled({ timeout: base.BurgerMenu.openDelay })
+
         // Click "All Items"
         await base.BurgerMenu.btnAllItems.click()
         // Assert current url is inventory

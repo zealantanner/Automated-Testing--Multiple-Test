@@ -5,7 +5,7 @@ export default class BurgerMenu {
     public get menu() { return $('.bm-menu-wrap') }
     public get btnOpen() { return $('button#react-burger-menu-btn') }
     public get btnClose() { return $('button#react-burger-cross-btn') }
-    
+
     public readonly openDelay = 5000
 
     public async openMenu() {
