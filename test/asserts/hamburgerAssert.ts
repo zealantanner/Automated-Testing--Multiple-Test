@@ -21,7 +21,7 @@ export default new class HamburgerAssert extends Assertion {
             // Open hamburger menu
             await base.HamburgerMenu.openMenu()
             // Wait for menu to open
-            await base.HamburgerMenu.btnClose.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+            await base.HamburgerMenu.btnClose.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
 
             // Close hamburger menu
             await base.HamburgerMenu.closeMenu()
@@ -42,8 +42,8 @@ export default new class HamburgerAssert extends Assertion {
 
     public async assertAllItems() {
         await this.preAssert()
-        // Wait for All Items to be enabled
-        await base.HamburgerMenu.btnAllItems.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+        // Wait for All Items to be displayed
+        await base.HamburgerMenu.btnAllItems.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
 
         // Click "All Items"
         await base.HamburgerMenu.btnAllItems.click()
@@ -52,8 +52,8 @@ export default new class HamburgerAssert extends Assertion {
     }
     public async assertAbout(real:bool=false) {
         await this.preAssert()
-        // Wait for About to be enabled
-        await base.HamburgerMenu.btnAbout.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+        // Wait for About to be displayed
+        await base.HamburgerMenu.btnAbout.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
         // Gets the href info of btnAbout
         const link = await base.HamburgerMenu.btnAbout.getAttribute('href')
         // Assert btnAbout has href of saucelabs url
@@ -70,8 +70,8 @@ export default new class HamburgerAssert extends Assertion {
     }
     public async assertLogout() {
         await this.preAssert()
-        // Wait for Logout to be enabled
-        await base.HamburgerMenu.btnLogout.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+        // Wait for Logout to be displayed
+        await base.HamburgerMenu.btnLogout.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
         // Click "Logout"
         await base.HamburgerMenu.btnLogout.click()
         // Assert current url is login
@@ -99,8 +99,8 @@ export default new class HamburgerAssert extends Assertion {
         
         // Open hamburger menu
         await base.HamburgerMenu.openMenu()
-        // Wait for Reset App State to be enabled
-        await base.HamburgerMenu.btnResetAppState.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+        // Wait for Reset App State to be displayed
+        await base.HamburgerMenu.btnResetAppState.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
         // Click "Reset App State"
         await base.HamburgerMenu.btnResetAppState.click()
 
@@ -132,8 +132,8 @@ export default new class HamburgerAssert extends Assertion {
 
         // Open hamburger menu
         await base.HamburgerMenu.openMenu()
-        // Wait for Reset App State to be enabled
-        await base.HamburgerMenu.btnResetAppState.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
+        // Wait for Reset App State to be displayed
+        await base.HamburgerMenu.btnResetAppState.waitForDisplayed({ timeout: base.HamburgerMenu.openDelay })
         // Click "Reset App State"
         await base.HamburgerMenu.btnResetAppState.click()
 
