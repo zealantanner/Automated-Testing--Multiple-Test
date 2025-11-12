@@ -9,7 +9,7 @@ import Cart from "../pageobjects/cart";
 
 
 
-export default new class BurgerAssert extends Assertion {
+export default new class HamburgerAssert extends Assertion {
     public async assertOpenAndClose(pagesToTry:int=1) {
         // Open and login
         await super.preAssert()
@@ -18,16 +18,16 @@ export default new class BurgerAssert extends Assertion {
             // Go to random page
             await this.openRandomPageHasMenu()
 
-            // Open burger menu
-            await base.BurgerMenu.openMenu()
+            // Open hamburger menu
+            await base.HamburgerMenu.openMenu()
             // Wait for menu to open
-            await base.BurgerMenu.btnClose.waitForEnabled({ timeout: base.BurgerMenu.openDelay })
+            await base.HamburgerMenu.btnClose.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
 
-            // Close burger menu
-            await base.BurgerMenu.closeMenu()
+            // Close hamburger menu
+            await base.HamburgerMenu.closeMenu()
 
             // Assert menu not displayed
-            await expect(base.BurgerMenu.menu).not.toBeDisplayed()
+            await expect(base.HamburgerMenu.menu).not.toBeDisplayed()
         }
     }
 
@@ -36,29 +36,32 @@ export default new class BurgerAssert extends Assertion {
         await super.preAssert()
         // Goes to random page
         await this.openRandomPageHasMenu()
-        // Open burger menu
-        await base.BurgerMenu.openMenu()
+        // Open hamburger menu
+        await base.HamburgerMenu.openMenu()
     }
 
     public async assertAllItems() {
         await this.preAssert()
-        await base.BurgerMenu.btnAllItems.waitForEnabled({ timeout: base.BurgerMenu.openDelay })
+        // Wait for All Items to be enabled
+        await base.HamburgerMenu.btnAllItems.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
 
         // Click "All Items"
-        await base.BurgerMenu.btnAllItems.click()
+        await base.HamburgerMenu.btnAllItems.click()
         // Assert current url is inventory
         await this.assertUrl(Inventory.baseUrl)
     }
     public async assertAbout(real:bool=false) {
         await this.preAssert()
+        // Wait for About to be enabled
+        await base.HamburgerMenu.btnAbout.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
         // Gets the href info of btnAbout
-        const link = await base.BurgerMenu.btnAbout.getAttribute('href')
+        const link = await base.HamburgerMenu.btnAbout.getAttribute('href')
         // Assert btnAbout has href of saucelabs url
         await expect(link).toContain(this.SAUCE_LABS_URL)
 
         if(real) { // Gets stuck so I'm unable to test correctly
             // Click "About"
-            await base.BurgerMenu.btnAbout.click()
+            await base.HamburgerMenu.btnAbout.click()
             // Assert current url is saucelabs url
             await this.assertUrl(this.SAUCE_LABS_URL)
             // Assert href linked correctly
@@ -67,8 +70,10 @@ export default new class BurgerAssert extends Assertion {
     }
     public async assertLogout() {
         await this.preAssert()
+        // Wait for Logout to be enabled
+        await base.HamburgerMenu.btnLogout.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
         // Click "Logout"
-        await base.BurgerMenu.btnLogout.click()
+        await base.HamburgerMenu.btnLogout.click()
         // Assert current url is login
         await this.assertUrl(Login.baseUrl)
         // Assert cookies were erased
@@ -92,10 +97,12 @@ export default new class BurgerAssert extends Assertion {
         await expect(await getInventoryCount()).toBeGreaterThan(0)
         await expect(await getCartIconCount()).toBeGreaterThan(0)
         
-        // Open burger menu
-        await base.BurgerMenu.openMenu()
+        // Open hamburger menu
+        await base.HamburgerMenu.openMenu()
+        // Wait for Reset App State to be enabled
+        await base.HamburgerMenu.btnResetAppState.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
         // Click "Reset App State"
-        await base.BurgerMenu.btnResetAppState.click()
+        await base.HamburgerMenu.btnResetAppState.click()
 
         // Assert amount of in-cart items is 0
         // await expect(await getInventoryCount()).toBe(0) // fails
@@ -123,10 +130,12 @@ export default new class BurgerAssert extends Assertion {
         await expect(await getCartCount()).toBeGreaterThan(0)
         await expect(await getCartIconCount()).toBeGreaterThan(0)
 
-        // Open burger menu
-        await base.BurgerMenu.openMenu()
+        // Open hamburger menu
+        await base.HamburgerMenu.openMenu()
+        // Wait for Reset App State to be enabled
+        await base.HamburgerMenu.btnResetAppState.waitForEnabled({ timeout: base.HamburgerMenu.openDelay })
         // Click "Reset App State"
-        await base.BurgerMenu.btnResetAppState.click()
+        await base.HamburgerMenu.btnResetAppState.click()
 
         // Assert amount of in-cart items is 0
         // await expect(await getCartCount()).toBe(0) // fails

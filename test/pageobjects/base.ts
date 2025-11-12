@@ -1,5 +1,5 @@
 import { browser, $ } from "@wdio/globals";
-import BurgerMenu from "./base/burgerMenu";
+import HamburgerMenu from "./base/hamburgerMenu";
 import CartMenu from "./base/cartMenu";
 import { str } from "../utils/utils";
 
@@ -7,7 +7,7 @@ import { str } from "../utils/utils";
 //> edit the jira tickets to work with this
 /** base page */
 export default class Base {
-    public get BurgerMenu() { return new BurgerMenu() }
+    public get HamburgerMenu() { return new HamburgerMenu() }
     public get CartMenu() { return new CartMenu() }
     public get logo() { return $('//*[contains(@class,"logo") and contains(text(),"Swag Labs")]') }
 

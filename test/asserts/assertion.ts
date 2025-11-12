@@ -45,7 +45,7 @@ export default class Assertion {
         await Login.login(this.VALID_USER)
     }
     
-    // Go to a random page that has burger and cart menus
+    // Go to a random page that has hamburger and cart menus
     protected async openRandomPageHasMenu() {
         // Array of pages with menus
         const pages = [

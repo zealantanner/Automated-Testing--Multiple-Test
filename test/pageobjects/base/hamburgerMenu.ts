@@ -1,7 +1,7 @@
 import { $ } from "@wdio/globals";
 
 
-export default class BurgerMenu {
+export default class HamburgerMenu {
     public get menu() { return $('.bm-menu-wrap') }
     public get btnOpen() { return $('button#react-burger-menu-btn') }
     public get btnClose() { return $('button#react-burger-cross-btn') }
