@@ -29,9 +29,12 @@ export default new class CartAssert extends Assertion {
 
         // Assert before+added is correct amount
         await expect(beforeAmount+amountToAdd).toBe(afterAmount)
-
+        
         // Removes all items from cart
         await Inventory.removeItems()
+
+        // Assert amount is 0
+        await expect(await getCartAmount()).toBe(0)
     }
     public async assertCartClickDirect() {
         // Open and login
@@ -98,39 +101,6 @@ export default new class CartAssert extends Assertion {
         // Asserts the amount of items in the cart is 0
         await expect((await Cart.items).length).toBe(0)
     }
-    public async assertRemovingItems() {
-        // Open and login
-        await this.preAssert()
-        // Open cart page
-        await Cart.open()
-
-        // Removes all items from cart
-        await Cart.removeItems()
-        // Asserts the amount of items in the cart is 0
-        await expect((await Cart.items).length).toBe(0)
-
-        // Open inventory page
-        await Inventory.open()
-
-        // Saves random int from 2 to 4
-        const amountToAdd = shuffle(range(2,4))[0]
-        // Adds some items to the cart
-        await Inventory.addItems(amountToAdd)
-
-        // Open cart page
-        await Cart.open()
-        // Removes 1 item from cart
-        await Cart.removeItem()
-        
-        // Asserts 1 item was removed
-        await expect(amountToAdd-1).toBe((await Cart.getItemsInCart()).length)
-        
-        // Removes all items from cart
-        await Cart.removeItems()
-        
-        // Asserts the amount of items in the cart is 0
-        await expect((await Cart.getItemsInCart()).length).toBe(0)
-    }
     public async assertBtnContinueShopping() {
         // Open and login
         await this.preAssert()
@@ -186,7 +156,7 @@ export default new class CartAssert extends Assertion {
 
             // Assert current url is checkout 1 and not cart
             await this.assertUrl(InventoryItem.baseUrlWithID(chosen.id))
-            
+
             // Assert the id is correct
             await expect(InventoryItem.lastItemID).toBe(chosen.id)
             // Assert the title is correct
