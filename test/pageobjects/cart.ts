@@ -1,12 +1,10 @@
 import { $, $$ } from "@wdio/globals";
-import { displayDelay, int, Item, range, shuffle } from "../utils/utils";
+import { int, Item, range, shuffle } from "../utils/utils";
 import Base from "./base";
 
 
 
 class Cart extends Base {
-    public readonly cartLimit = 6
-    
     public get items() {
         return $$('.cart_list .cart_item').map(el => new Item(el))
     }
@@ -31,15 +29,7 @@ class Cart extends Base {
     }
 
     public get btnCheckout() { return $('button#checkout') }
-    
-    public async clickBtnCheckout() {
-        await this.btnCheckout.click()
-    }
-
     public get btnContinueShopping() { return $('#continue-shopping') }
-    public async clickBtnContinueShopping() {
-        await this.btnContinueShopping.click()
-    }
 
     /** @param subUrl cart.html */
     public get subUrl() { return "cart.html" }

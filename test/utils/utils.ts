@@ -4,8 +4,6 @@ export type int = number;
 export type str = string;
 
 
-export const displayDelay = 5000;
-
 export const randstr = (length = 5):str => Math.random().toString(36).slice(2, 2+length)
 
 export function range(start:int, stop:int):int[] {
@@ -22,7 +20,6 @@ export function shuffle<T>(array:T[]):T[] {
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
 }
-
 
 export class User {
     constructor(

@@ -19,10 +19,6 @@ export default class Base {
         path = path ?? this.baseUrl
         await browser.url(path)
     }
-    //>assert move to assert file
-    // public async openRandomPage() {
-    //     return shuffle(pagesWithMenus())[0]()
-    // }
     public async quickReset() {
         await browser.deleteAllCookies()
     }

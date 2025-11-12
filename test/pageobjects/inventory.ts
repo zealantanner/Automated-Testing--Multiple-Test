@@ -1,5 +1,5 @@
 import { $$ } from "@wdio/globals";
-import { int, displayDelay, shuffle, range, Item } from "../utils/utils"
+import { int, shuffle, range, Item } from "../utils/utils"
 import Base from "./base";
 
 
