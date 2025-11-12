@@ -6,7 +6,7 @@ import HamburgerAssert from "../asserts/hamburgerAssert";
 
 describe(`Opening [MTQA-3846]`, () => {
     it(`Should open and close the hamburger menu from random pages`, async () => {
-        await HamburgerAssert.assertOpenAndClose(3)
+        await HamburgerAssert.assertOpenAndClose()
     })
 })
 describe(`All Items button [MTQA-3847]`, () => {
