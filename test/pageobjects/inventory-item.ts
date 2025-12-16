@@ -24,7 +24,7 @@ class InventoryItem extends Base {
     /** @param itemID https://www.saucedemo.com/inventory-item.html?id={{itemID}} */
     public baseUrlWithID(itemID:str) {
         const url = new URL(this.baseUrl)
-        url.searchParams.set("id", itemID.toString())
+        url.searchParams.set("id", itemID)
         this.lastItemID = itemID
         return url.toString()
     }
